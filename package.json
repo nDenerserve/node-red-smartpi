@@ -1,6 +1,6 @@
 {
   "name": "node-red-smartpi",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "input of smartpi values",
   "main": "node.js",
   "author": "Jens Ramhorst",

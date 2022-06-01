@@ -1,6 +1,6 @@
 {
   "name": "node-red-smartpiinput",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "input of smartpi values",
   "main": "node.js",
   "scripts": {

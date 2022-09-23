@@ -1,6 +1,6 @@
 {
     "name": "node-red-smartpi",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "nodes for the smartpi",
     "main": "node.js",
     "scripts": {

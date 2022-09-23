@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType('smartpi-values', {
+        category: 'SmartPi',
+        color: '#a6bbcf',
+        defaults: {
+            name: {
+                value: "smartpi-values"
+            },
+            indicator: {
+                value: ""
+            }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "arrow-in.png",
+        label: function() {
+            return this.name + " " + this.indicator || "smartpi-values " + this.indicator;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="smartpi-values">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="smartpi-values">
+    <p>Input of all values from the SmartPi.</p>
+</script>

@@ -1,6 +1,6 @@
 {
     "name": "@nd-enerserve/node-red-smartpi",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "nodes for the smartpi",
     "main": "node.js",
     "scripts": {

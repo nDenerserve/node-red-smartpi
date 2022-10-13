@@ -6,7 +6,11 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
+    "engines": {
+       "node": ">=12.22.12"
+    },
     "node-red": {
+        "version": ">=2.2.2",
         "nodes": {
             "Smartpi-Values": "smartpi-values.js",
             "Smartpi-Input": "smartpi-input.js",
@@ -29,7 +33,7 @@
     },
     "homepage": "https://www.enerserve.eu",
     "dependencies": {
-        "fs": "0.0.1-security",
-        "node-watch": "^0.7.3"
+        "fs": ">=0.0.1-security",
+        "node-watch": ">=0.7.3"
     }
 }

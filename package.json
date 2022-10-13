@@ -6,6 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "engines": {
        "node": ">=12.22.12"
     },

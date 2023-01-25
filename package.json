@@ -18,7 +18,8 @@
             "Smartpi-Values": "smartpi-values.js",
             "Smartpi-Input": "smartpi-input.js",
             "Treshold-Trigger": "smartpi-treshold-trigger.js",
-            "e.temperature-Values": "smartpi-etemperature-values.js"
+            "e.temperature-Values": "smartpi-etemperature-values.js",
+            "e.digital OUT": "smartpi-modules-digital-out.js"
         }
     },
     "repository": {

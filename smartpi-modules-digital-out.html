@@ -1,0 +1,167 @@
+<script type="text/javascript">
+    RED.nodes.registerType('smartpi-e.digital-out', {
+        category: 'SmartPi',
+        color: '#a6bbcf',
+        defaults: {
+            name: {
+                value: 'smartpi-e.digital-out',
+
+            },
+            bits: {
+                value: []
+            },
+            indicator: {
+                value: '',
+            },
+            server: {
+                value: 'http://127.0.0.1:9000',
+            },
+            token: {
+                value: ''
+            },
+            output: {
+                value: 1
+            }
+
+        },
+        oneditsave: Save,
+        oneditprepare: Restore,
+        inputs: 1,
+        outputs: 1,
+        icon: 'arrow-in.png',
+        label: function() {
+            return (
+                this.name + ' ' + this.indicator ||
+                'smartpi-e.digital-out ' + this.indicator
+            );
+        },
+    });
+
+    function Save() {
+        const NumCheckBoxes = 3;
+        this.bits = [];
+        for (let i = 0; i < NumCheckBoxes; i++) {
+            this.bits.push($(`#digitaloutA${i}`).is(":checked"));
+        }
+    }
+
+    function Restore() {
+        for (let i = 0; i < this.bits.length; i++) {
+            $(`#digitaloutA${i}`).prop('checked', this.bits[i]);
+        }
+    }
+</script>
+
+<script type="text/x-red" data-template-name="smartpi-e.digital-out">
+
+    <style>
+        .labelleft {
+            float: left;
+            width: 150px !important;
+        }
+
+        .customswitch {
+            position: relative;
+            display: inline-block;
+            width: 23px !important;
+            height: 40px;
+        }
+        
+        .customswitch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+        
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked+.slider:before {
+            -webkit-transform: translateY(-17px);
+            -ms-transform: translateY(-17px);
+            transform: translateY(-17px);
+        }
+        /* Rounded sliders */
+        
+        .slider.round {
+            border-radius: 23px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="digitaloutA0" class="labelleft"><i class="fa fa-microchip"></i> Jumpersettings / </br> Deviceaddress</label>
+    <span>
+        <label class="customswitch">
+            <input type="checkbox" id="digitaloutA0">
+            <span class="slider round"></span>
+      </label>
+        <label class="customswitch">
+            <input type="checkbox" id="digitaloutA1">
+            <span class="slider round"></span>
+        </label>
+        <label class="customswitch">
+            <input type="checkbox" id="digitaloutA2">
+            <span class="slider round"></span>
+        </label>
+    </span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-output"><i class="fa fa-sign-out"></i> Output:</label>
+        <select id="node-input-output" style="width: 250px;">
+	            <option selected="selected" value="1">Output1</option>
+	            <option selected="selected" value="2">Output2</option>
+                <option selected="selected" value="3">Output3</option>
+                <option selected="selected" value="4">Output4</option>
+	        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-globe"></i> Server:port</label>
+        <input type="text" id="node-input-server" placeholder="http://127.0.0.1:9000">
+    </div>
+    <div class="form-row">
+        <label for="node-input-token"> <i class="fa fa-lock"></i> Baerer-Token<span id="node-span-token" style="display:none"></span></label>
+        <input type="password" id="node-input-token">
+    </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="smartpi-e.digital-out">
+    <p>Input of all values from the SmartPi e.temperature addon module.</p>
+</script>

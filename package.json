@@ -10,7 +10,7 @@
         "access": "public"
     },
     "engines": {
-       "node": ">=12.22.12"
+        "node": ">=12.22.12"
     },
     "node-red": {
         "version": ">=2.2.2",
@@ -38,6 +38,7 @@
     "homepage": "https://www.enerserve.eu",
     "dependencies": {
         "fs": ">=0.0.1-security",
+        "got": "11.8.5",
         "node-watch": ">=0.7.3"
     }
 }

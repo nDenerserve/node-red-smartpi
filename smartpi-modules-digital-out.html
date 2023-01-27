@@ -21,6 +21,9 @@
             },
             output: {
                 value: 1
+            },
+            readonly: {
+                value: false
             }
 
         },
@@ -158,6 +161,10 @@
     <div class="form-row">
         <label for="node-input-token"> <i class="fa fa-lock"></i> Baerer-Token<span id="node-span-token" style="display:none"></span></label>
         <input type="password" id="node-input-token">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-readonly" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-readonly" style="width: 70%;"> <i class="fa fa-book"></i> Readonly (Outputs will not set)</label>
     </div>
 </script>
 

@@ -14,9 +14,7 @@ module.exports = function(RED) {
           return console.log(err);
         }
         var values = data.split(';');
-				console.log("Values: "+values);
 				var output = 0.0
-				console.log("Output: "+output);
 				switch (node.indicator) {
 					case "p":
 						output = parseFloat(values[8]) + parseFloat(values[9]) + parseFloat(values[10]);
@@ -55,7 +53,6 @@ module.exports = function(RED) {
 						output = parseFloat(values[7]);
 						break;
 				}
-				console.log("Raus: "+output);
         node.send({payload:output});
       });
   });

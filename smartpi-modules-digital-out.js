@@ -1,6 +1,4 @@
-module.exports = function (RED) {
-    const got = require('got');
-
+module.exports = function(RED) {
 
     function SmartPiDigitalOut(config) {
 
@@ -13,7 +11,7 @@ module.exports = function (RED) {
         this.output = config.output;
         this.readonly = config.readonly;
 
-        node.on('input', function (msg, nodeSend, nodeDone) {
+        node.on('input', function(msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == "0")) {
 

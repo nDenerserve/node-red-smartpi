@@ -5,7 +5,8 @@ module.exports = function(RED) {
         this.indicator = config.indicator;
         var node = this;
 
-        watch = require('node-watch');
+        const fs = require('fs');
+        const watch = require('node-watch');
         watch('/var/tmp/smartpi/etemperature_values', { recursive: true }, function(evt, name) {
             fs.readFile('/var/tmp/smartpi/etemperature_values', 'utf8', function(err, data) {
                 if (err) {

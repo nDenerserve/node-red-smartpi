@@ -11,6 +11,8 @@ module.exports = function(RED) {
         this.output = config.output;
         this.readonly = config.readonly;
 
+        const got = require('got');
+
         node.on('input', function(msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == "0")) {

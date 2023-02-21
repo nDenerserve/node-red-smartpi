@@ -1,5 +1,4 @@
-module.exports = async function (RED) {
-
+module.exports = function(RED) {
 
     function SmartPiDigitalOut(config) {
 
@@ -14,7 +13,9 @@ module.exports = async function (RED) {
         this.output = config.output;
         this.readonly = config.readonly;
 
-        node.on('input', function (msg, nodeSend, nodeDone) {
+        const got = require('got');
+
+        node.on('input', function(msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == "0")) {
 
@@ -68,28 +69,22 @@ module.exports = async function (RED) {
                 }
 
                 needle(opts.method, url, null, options)
-                    .then(function (response) {
-                        console.log(response);
-                        if (!error && response.statusCode == 200)
-                            console.log(response.body);
+                    .then(function (res) {
+                        if (!error && res.statusCode == 200) {
+                            msg.statusCode = res.statusCode;
+                            msg.headers = res.headers;
+                            msg.responseUrl = res.url;
+                            msg.payload = JSON.parse(res.body);
+                            msg.retry = 0;
+
+                            node.status({});
+                            nodeSend(msg);
+                            nodeDone();
+                        }
                     })
                     .catch(function (err) {
                         // ...
                     });
-
-                // if (this.readonly == false) {
-                //     needle.put(url, options, function (error, response) {
-                //         console.log(response);
-                //         if (!error && response.statusCode == 200)
-                //             console.log(response.body);
-                //     });
-                // } else {
-                //     needle.get(url, options, function (error, response) {
-                //         console.log(response);
-                //         if (!error && response.statusCode == 200)
-                //             console.log(response.body);
-                //     });
-                // }
 
 
                 // got(url, opts).then(res => {

@@ -1,9 +1,9 @@
 module.exports = function(RED) {
-	function SmartPiInput(config) {
-		RED.nodes.createNode(this,config);
+    function SmartPiInput(config) {
+        RED.nodes.createNode(this, config);
 
-    this.indicator = config.indicator;
-		var node = this;
+        this.indicator = config.indicator;
+        var node = this;
 
  const fs = require('fs');
  const watch = require('node-watch');
@@ -56,9 +56,9 @@ module.exports = function(RED) {
       });
   });
 
-  }
+    }
 
 
 
-	RED.nodes.registerType("smartpi-input",SmartPiInput);
+    RED.nodes.registerType("smartpi-input", SmartPiInput);
 }

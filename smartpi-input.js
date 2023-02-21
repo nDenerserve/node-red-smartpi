@@ -1,4 +1,3 @@
-
 module.exports = function(RED) {
 	function SmartPiInput(config) {
 		RED.nodes.createNode(this,config);
@@ -6,17 +5,15 @@ module.exports = function(RED) {
     this.indicator = config.indicator;
 		var node = this;
 
-  fs = require('fs');
-  watch = require('node-watch');
+ const fs = require('fs');
+ const watch = require('node-watch');
   watch( '/var/tmp/smartpi/smartpi_values', { recursive: true }, function(evt, name) {
       fs.readFile('/var/tmp/smartpi/smartpi_values', 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
         var values = data.split(';');
-				console.log("Values: "+values);
 				var output = 0.0
-				console.log("Output: "+output);
 				switch (node.indicator) {
 					case "p":
 						output = parseFloat(values[8]) + parseFloat(values[9]) + parseFloat(values[10]);
@@ -55,7 +52,6 @@ module.exports = function(RED) {
 						output = parseFloat(values[7]);
 						break;
 				}
-				console.log("Raus: "+output);
         node.send({payload:output});
       });
   });

@@ -1,8 +1,9 @@
-module.exports = function (RED) {
-    const got = require('got');
+module.exports = async function (RED) {
 
 
     function SmartPiDigitalOut(config) {
+
+        var needle = require('needle');
 
         RED.nodes.createNode(this, config);
         var node = this;
@@ -24,9 +25,9 @@ module.exports = function (RED) {
                 // TODO: add UI option to auto decompress. Setting to false for 1.x compatibility
                 opts.decompress = false;
                 if (this.readonly == false) {
-                    opts.method = "PUT";
+                    opts.method = "put";
                 } else {
-                    opts.method = "GET";
+                    opts.method = "get";
                 }
 
                 opts.retry = 0;
@@ -56,38 +57,72 @@ module.exports = function (RED) {
                     }
                 }
 
+                console.log(url);
+                console.log(opts.headers.Authorization);
 
-                got(url, opts).then(res => {
-                    msg.statusCode = res.statusCode;
-                    msg.headers = res.headers;
-                    msg.responseUrl = res.url;
-                    msg.payload = JSON.parse(res.body);
-                    msg.retry = 0;
-
-                    node.status({});
-                    nodeSend(msg);
-                    nodeDone();
-                }).catch(err => {
-                    // Pre 2.1, any errors would be sent to both Catch node and sent on as normal.
-                    // This is not ideal but is the legacy behaviour of the node.
-                    // 2.1 adds the 'senderr' option, if set to true, will *only* send errors
-                    // to Catch nodes. If false, it still does both behaviours.
-                    // TODO: 3.0 - make it one or the other.
-
-                    if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
-                        node.error(RED._("common.notification.errors.no-response"), msg);
-                        node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
-                    } else {
-                        node.error(err, msg);
-                        node.status({ fill: "red", shape: "ring", text: err.code });
+                var options = {
+                    json: true,
+                    headers: {
+                        authorization: opts.headers.Authorization
                     }
-                    msg.payload = err.toString() + " : " + url;
-                    msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
-                    if (node.metric() && timingLog) {
-                        emitTimingMetricLog(err.timings, msg);
-                    }
-                    nodeDone();
-                });
+                }
+
+                needle(opts.method, url, null, options)
+                    .then(function (response) {
+                        console.log(response);
+                        if (!error && response.statusCode == 200)
+                            console.log(response.body);
+                    })
+                    .catch(function (err) {
+                        // ...
+                    });
+
+                // if (this.readonly == false) {
+                //     needle.put(url, options, function (error, response) {
+                //         console.log(response);
+                //         if (!error && response.statusCode == 200)
+                //             console.log(response.body);
+                //     });
+                // } else {
+                //     needle.get(url, options, function (error, response) {
+                //         console.log(response);
+                //         if (!error && response.statusCode == 200)
+                //             console.log(response.body);
+                //     });
+                // }
+
+
+                // got(url, opts).then(res => {
+                //     msg.statusCode = res.statusCode;
+                //     msg.headers = res.headers;
+                //     msg.responseUrl = res.url;
+                //     msg.payload = JSON.parse(res.body);
+                //     msg.retry = 0;
+
+                //     node.status({});
+                //     nodeSend(msg);
+                //     nodeDone();
+                // }).catch(err => {
+                //     // Pre 2.1, any errors would be sent to both Catch node and sent on as normal.
+                //     // This is not ideal but is the legacy behaviour of the node.
+                //     // 2.1 adds the 'senderr' option, if set to true, will *only* send errors
+                //     // to Catch nodes. If false, it still does both behaviours.
+                //     // TODO: 3.0 - make it one or the other.
+
+                //     if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
+                //         node.error(RED._("common.notification.errors.no-response"), msg);
+                //         node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
+                //     } else {
+                //         node.error(err, msg);
+                //         node.status({ fill: "red", shape: "ring", text: err.code });
+                //     }
+                //     msg.payload = err.toString() + " : " + url;
+                //     msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
+                //     if (node.metric() && timingLog) {
+                //         emitTimingMetricLog(err.timings, msg);
+                //     }
+                //     nodeDone();
+                // });
 
 
 

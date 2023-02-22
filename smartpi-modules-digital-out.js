@@ -13,8 +13,6 @@ module.exports = function(RED) {
         this.output = config.output;
         this.readonly = config.readonly;
 
-        const got = require('got');
-
         node.on('input', function(msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == "0")) {
@@ -69,7 +67,7 @@ module.exports = function(RED) {
                 }
 
                 needle(opts.method, url, null, options)
-                    .then(function (res) {
+                    .then(function(res) {
                         if (!error && res.statusCode == 200) {
                             msg.statusCode = res.statusCode;
                             msg.headers = res.headers;
@@ -82,7 +80,7 @@ module.exports = function(RED) {
                             nodeDone();
                         }
                     })
-                    .catch(function (err) {
+                    .catch(function(err) {
                         // ...
                     });
 

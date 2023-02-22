@@ -56,9 +56,6 @@ module.exports = function(RED) {
                     }
                 }
 
-                console.log(url);
-                console.log(opts.headers.Authorization);
-
                 var options = {
                     json: true,
                     headers: {
@@ -68,55 +65,32 @@ module.exports = function(RED) {
 
                 needle(opts.method, url, null, options)
                     .then(function(res) {
-                        if (!error && res.statusCode == 200) {
-                            msg.statusCode = res.statusCode;
-                            msg.headers = res.headers;
-                            msg.responseUrl = res.url;
-                            msg.payload = JSON.parse(res.body);
-                            msg.retry = 0;
 
-                            node.status({});
-                            nodeSend(msg);
-                            nodeDone();
-                        }
+                        msg.statusCode = res.statusCode;
+                        msg.headers = res.headers;
+                        msg.responseUrl = res.url;
+                        msg.payload = JSON.parse(res.body);
+                        msg.retry = 0;
+
+                        node.status({});
+                        nodeSend(msg);
+                        nodeDone();
+
                     })
                     .catch(function(err) {
-                        // ...
+
+                        if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
+                            node.error(RED._("common.notification.errors.no-response"), msg);
+                            node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
+                        } else {
+                            node.error(err, msg);
+                            node.status({ fill: "red", shape: "ring", text: err.code });
+                        }
+                        msg.payload = err.toString() + " : " + url;
+                        msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
+                        nodeDone();
+
                     });
-
-
-                // got(url, opts).then(res => {
-                //     msg.statusCode = res.statusCode;
-                //     msg.headers = res.headers;
-                //     msg.responseUrl = res.url;
-                //     msg.payload = JSON.parse(res.body);
-                //     msg.retry = 0;
-
-                //     node.status({});
-                //     nodeSend(msg);
-                //     nodeDone();
-                // }).catch(err => {
-                //     // Pre 2.1, any errors would be sent to both Catch node and sent on as normal.
-                //     // This is not ideal but is the legacy behaviour of the node.
-                //     // 2.1 adds the 'senderr' option, if set to true, will *only* send errors
-                //     // to Catch nodes. If false, it still does both behaviours.
-                //     // TODO: 3.0 - make it one or the other.
-
-                //     if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
-                //         node.error(RED._("common.notification.errors.no-response"), msg);
-                //         node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
-                //     } else {
-                //         node.error(err, msg);
-                //         node.status({ fill: "red", shape: "ring", text: err.code });
-                //     }
-                //     msg.payload = err.toString() + " : " + url;
-                //     msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
-                //     if (node.metric() && timingLog) {
-                //         emitTimingMetricLog(err.timings, msg);
-                //     }
-                //     nodeDone();
-                // });
-
 
 
             } else {

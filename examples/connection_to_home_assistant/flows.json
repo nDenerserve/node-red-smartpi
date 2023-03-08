@@ -13,8 +13,8 @@
         "z": "78c5a9187d6bfaf7",
         "name": "smartpi-values",
         "indicator": "",
-        "x": 120,
-        "y": 1400,
+        "x": 110,
+        "y": 1460,
         "wires": [
             [
                 "5da00ff7d46ab718"
@@ -34,7 +34,7 @@
         "property": "payload",
         "topi": "topic",
         "x": 1230,
-        "y": 1480,
+        "y": 1540,
         "wires": [
             [
                 "4860b4640106611c"
@@ -55,8 +55,8 @@
         "correl": "",
         "expiry": "",
         "broker": "fe6c11b1f6951884",
-        "x": 1240,
-        "y": 1580,
+        "x": 1190,
+        "y": 1640,
         "wires": []
     },
     {
@@ -77,7 +77,7 @@
         "allowrate": true,
         "outputs": 1,
         "x": 1080,
-        "y": 1480,
+        "y": 1540,
         "wires": [
             [
                 "7ed38bcc602b9df9"
@@ -181,7 +181,7 @@
         "name": "home assistant auto discovery device configuration",
         "info": "",
         "x": 230,
-        "y": 160,
+        "y": 180,
         "wires": []
     },
     {
@@ -263,7 +263,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 110,
+        "x": 100,
         "y": 100,
         "wires": [
             [
@@ -278,7 +278,7 @@
         "name": "home assistant configuration",
         "info": "",
         "x": 160,
-        "y": 40,
+        "y": 60,
         "wires": []
     },
     {
@@ -292,8 +292,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.node_id}}/{{flow.configuration.object_id}}",
         "output": "str",
-        "x": 1020,
-        "y": 1580,
+        "x": 980,
+        "y": 1640,
         "wires": [
             [
                 "96c8da7170a7a730",
@@ -311,10 +311,10 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\n    \"date\":{\"raw\":\"{{payload.date}}\"},\n    {{#payload.consumecounter}}\n    \"consumecounter\":{\"raw\":\"{{payload.consumecounter}}\", \"value\":{{payload.consumecounter}}},\n    {{/payload.consumecounter}}\n    {{#payload.producecounter}}\n    \"producecounter\":{\"raw\":\"{{payload.producecounter}}\", \"value\":{{payload.producecounter}}},\n    {{/payload.producecounter}}\n    \"i1\":{\"raw\":\"{{payload.i1}}\", \"value\":{{payload.i1}}},\n    \"i2\":{\"raw\":\"{{payload.i2}}\", \"value\":{{payload.i2}}},\n    \"i3\":{\"raw\":\"{{payload.i3}}\", \"value\":{{payload.i3}}},\n    \"i4\":{\"raw\":\"{{payload.i4}}\", \"value\":{{payload.i4}}},\n    {{#payload.i}}\n    \"i\":{\"raw\":\"{{payload.i}}\", \"value\":{{payload.i}}},\n    {{/payload.i}}\n    \"u1\":{\"raw\":\"{{payload.u1}}\", \"value\":{{payload.u1}}},\n    \"u2\":{\"raw\":\"{{payload.u2}}\", \"value\":{{payload.u2}}},\n    \"u3\":{\"raw\":\"{{payload.u3}}\", \"value\":{{payload.u3}}},\n    \"p1\":{\"raw\":\"{{payload.p1}}\", \"value\":{{payload.p1}}},\n    \"p2\":{\"raw\":\"{{payload.p2}}\", \"value\":{{payload.p2}}},\n    \"p3\":{\"raw\":\"{{payload.p3}}\", \"value\":{{payload.p3}}},\n    {{#payload.p}}\n    \"p\":{\"raw\":\"{{payload.p}}\", \"value\":{{payload.p}}},\n    {{/payload.p}}\n    \"cos1\":{\"raw\":\"{{payload.cos1}}\", \"value\":{{payload.cos1}}},\n    \"cos2\":{\"raw\":\"{{payload.cos2}}\", \"value\":{{payload.cos2}}},\n    \"cos3\":{\"raw\":\"{{payload.cos3}}\", \"value\":{{payload.cos3}}},\n    \"f1\":{\"raw\":\"{{payload.f1}}\", \"value\":{{payload.f1}}},\n    \"f2\":{\"raw\":\"{{payload.f2}}\", \"value\":{{payload.f2}}},\n    \"f3\":{\"raw\":\"{{payload.f3}}\", \"value\":{{payload.f3}}},\n    \"ec1\":{\"raw\":\"{{payload.ec1}}\", \"value\":{{payload.ec1}}},\n    \"ec2\":{\"raw\":\"{{payload.ec2}}\", \"value\":{{payload.ec2}}},\n    \"ec3\":{\"raw\":\"{{payload.ec3}}\", \"value\":{{payload.ec3}}},\n    \"ep1\":{\"raw\":\"{{payload.ep1}}\", \"value\":{{payload.ep1}}},\n    \"ep2\":{\"raw\":\"{{payload.ep2}}\", \"value\":{{payload.ep2}}},\n    \"ep3\":{\"raw\":\"{{payload.ep3}}\", \"value\":{{payload.ep3}}},\n    \"bal\":{\"raw\":\"{{payload.bal}}\", \"value\":{{payload.bal}}}\n}",
+        "template": "{\n    \"date\":{\"raw\":\"{{payload.date}}\"},\n    {{#payload.consumecounter}}\n    \"consumecounter\":{\"raw\":\"{{payload.consumecounter}}\", \"value\":{{payload.consumecounter}}},\n    {{/payload.consumecounter}}\n    {{#payload.producecounter}}\n    \"producecounter\":{\"raw\":\"{{payload.producecounter}}\", \"value\":{{payload.producecounter}}},\n    {{/payload.producecounter}}\n    \"i\":{\"raw\":\"{{payload.i}}\", \"value\":{{payload.i}}},\n    \"i1\":{\"raw\":\"{{payload.i1}}\", \"value\":{{payload.i1}}},\n    \"i2\":{\"raw\":\"{{payload.i2}}\", \"value\":{{payload.i2}}},\n    \"i3\":{\"raw\":\"{{payload.i3}}\", \"value\":{{payload.i3}}},\n    \"i4\":{\"raw\":\"{{payload.i4}}\", \"value\":{{payload.i4}}},\n    \"u1\":{\"raw\":\"{{payload.u1}}\", \"value\":{{payload.u1}}},\n    \"u2\":{\"raw\":\"{{payload.u2}}\", \"value\":{{payload.u2}}},\n    \"u3\":{\"raw\":\"{{payload.u3}}\", \"value\":{{payload.u3}}},\n    \"p\":{\"raw\":\"{{payload.p}}\", \"value\":{{payload.p}}},\n    \"p1\":{\"raw\":\"{{payload.p1}}\", \"value\":{{payload.p1}}},\n    \"p2\":{\"raw\":\"{{payload.p2}}\", \"value\":{{payload.p2}}},\n    \"p3\":{\"raw\":\"{{payload.p3}}\", \"value\":{{payload.p3}}},\n    \"cos1\":{\"raw\":\"{{payload.cos1}}\", \"value\":{{payload.cos1}}},\n    \"cos2\":{\"raw\":\"{{payload.cos2}}\", \"value\":{{payload.cos2}}},\n    \"cos3\":{\"raw\":\"{{payload.cos3}}\", \"value\":{{payload.cos3}}},\n    \"f1\":{\"raw\":\"{{payload.f1}}\", \"value\":{{payload.f1}}},\n    \"f2\":{\"raw\":\"{{payload.f2}}\", \"value\":{{payload.f2}}},\n    \"f3\":{\"raw\":\"{{payload.f3}}\", \"value\":{{payload.f3}}},\n    \"ec\":{\"raw\":\"{{payload.ec}}\", \"value\":{{payload.ec}}},\n    \"ec1\":{\"raw\":\"{{payload.ec1}}\", \"value\":{{payload.ec1}}},\n    \"ec2\":{\"raw\":\"{{payload.ec2}}\", \"value\":{{payload.ec2}}},\n    \"ec3\":{\"raw\":\"{{payload.ec3}}\", \"value\":{{payload.ec3}}},\n    \"ep\":{\"raw\":\"{{payload.ep}}\", \"value\":{{payload.ep}}},\n    \"ep1\":{\"raw\":\"{{payload.ep1}}\", \"value\":{{payload.ep1}}},\n    \"ep2\":{\"raw\":\"{{payload.ep2}}\", \"value\":{{payload.ep2}}},\n    \"ep3\":{\"raw\":\"{{payload.ep3}}\", \"value\":{{payload.ep3}}},\n    \"bal\":{\"raw\":\"{{payload.bal}}\", \"value\":{{payload.bal}}}\n}",
         "output": "json",
-        "x": 850,
-        "y": 1580,
+        "x": 830,
+        "y": 1640,
         "wires": [
             [
                 "11cd536f5e05c87a"
@@ -327,8 +327,8 @@
         "z": "78c5a9187d6bfaf7",
         "name": "home assistant publish of all smartpi values",
         "info": "",
-        "x": 210,
-        "y": 1340,
+        "x": 200,
+        "y": 1420,
         "wires": []
     },
     {
@@ -345,7 +345,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1190,
-        "y": 1700,
+        "y": 1760,
         "wires": []
     },
     {
@@ -361,8 +361,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1210,
-        "y": 1660,
+        "x": 1200,
+        "y": 1720,
         "wires": []
     },
     {
@@ -377,38 +377,10 @@
         "template": "{{flow.configuration.message_rate}}",
         "output": "str",
         "x": 870,
-        "y": 1480,
+        "y": 1540,
         "wires": [
             [
                 "9dd16a1be56cad41"
-            ]
-        ]
-    },
-    {
-        "id": "9946938d0f47739a",
-        "type": "smartpi-input",
-        "z": "78c5a9187d6bfaf7",
-        "name": "smartpi-in-power-total",
-        "indicator": "p",
-        "x": 150,
-        "y": 1460,
-        "wires": [
-            [
-                "3ff5d9fa1a0fb9bc"
-            ]
-        ]
-    },
-    {
-        "id": "3453cabca854dc85",
-        "type": "smartpi-input",
-        "z": "78c5a9187d6bfaf7",
-        "name": "smartpi-in-current-total",
-        "indicator": "i",
-        "x": 150,
-        "y": 1500,
-        "wires": [
-            [
-                "a93684f19fbcd5d1"
             ]
         ]
     },
@@ -433,48 +405,10 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 810,
-        "y": 1400,
-        "wires": [
-            [
-                "bf0d7928b2e43095"
-            ]
-        ]
-    },
-    {
-        "id": "3ff5d9fa1a0fb9bc",
-        "type": "template",
-        "z": "78c5a9187d6bfaf7",
-        "name": "jsonify p",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{\"p\": \"{{payload}}\" }",
-        "output": "json",
-        "x": 340,
         "y": 1460,
         "wires": [
             [
-                "5da00ff7d46ab718"
-            ]
-        ]
-    },
-    {
-        "id": "a93684f19fbcd5d1",
-        "type": "template",
-        "z": "78c5a9187d6bfaf7",
-        "name": "jsonify i",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "{\"i\": \"{{payload}}\" }",
-        "output": "json",
-        "x": 340,
-        "y": 1500,
-        "wires": [
-            [
-                "5da00ff7d46ab718"
+                "bf0d7928b2e43095"
             ]
         ]
     },
@@ -751,7 +685,7 @@
         "correl": "",
         "expiry": "",
         "broker": "fe6c11b1f6951884",
-        "x": 970,
+        "x": 960,
         "y": 660,
         "wires": []
     },
@@ -933,7 +867,7 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i\",\n    \"name\": \"[[flow.configuration.name]] Current total\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 330,
+        "x": 320,
         "y": 380,
         "wires": [
             [
@@ -1157,7 +1091,7 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i/config",
         "output": "str",
-        "x": 640,
+        "x": 630,
         "y": 380,
         "wires": [
             [
@@ -1427,7 +1361,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 940,
+        "y": 980,
         "wires": []
     },
     {
@@ -1441,8 +1375,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec1\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 1 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec1.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 940,
+        "x": 330,
+        "y": 980,
         "wires": [
             [
                 "1b5d7b7b52aae20c"
@@ -1464,7 +1398,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 980,
+        "y": 1020,
         "wires": []
     },
     {
@@ -1478,8 +1412,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec2\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 2 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec2.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 980,
+        "x": 330,
+        "y": 1020,
         "wires": [
             [
                 "57296f8fc4e26f93"
@@ -1497,8 +1431,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec3\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 3 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec3.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 1020,
+        "x": 330,
+        "y": 1060,
         "wires": [
             [
                 "9455296a2da75979"
@@ -1520,7 +1454,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 1020,
+        "y": 1060,
         "wires": []
     },
     {
@@ -1534,8 +1468,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec1/config",
         "output": "str",
-        "x": 650,
-        "y": 940,
+        "x": 640,
+        "y": 980,
         "wires": [
             [
                 "7165ce4095541a6d"
@@ -1553,8 +1487,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec2/config",
         "output": "str",
-        "x": 650,
-        "y": 980,
+        "x": 640,
+        "y": 1020,
         "wires": [
             [
                 "f31cd64d674aaed1"
@@ -1572,8 +1506,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec3/config",
         "output": "str",
-        "x": 650,
-        "y": 1020,
+        "x": 640,
+        "y": 1060,
         "wires": [
             [
                 "3fa1d2d3aa28ed79"
@@ -1595,7 +1529,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 1060,
+        "y": 1140,
         "wires": []
     },
     {
@@ -1609,8 +1543,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep1\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 1 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep1.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 1060,
+        "x": 330,
+        "y": 1140,
         "wires": [
             [
                 "84728401c6ad478b"
@@ -1632,7 +1566,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 1100,
+        "y": 1180,
         "wires": []
     },
     {
@@ -1646,8 +1580,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep2\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 2 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep2.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 1100,
+        "x": 330,
+        "y": 1180,
         "wires": [
             [
                 "e4158bdf62b87e0b"
@@ -1665,8 +1599,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep3\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 3 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep3.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 340,
-        "y": 1140,
+        "x": 330,
+        "y": 1220,
         "wires": [
             [
                 "83a4be7e7dde8501"
@@ -1688,7 +1622,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 1140,
+        "y": 1220,
         "wires": []
     },
     {
@@ -1702,8 +1636,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep1/config",
         "output": "str",
-        "x": 650,
-        "y": 1060,
+        "x": 640,
+        "y": 1140,
         "wires": [
             [
                 "e601bef767de475d"
@@ -1721,8 +1655,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep2/config",
         "output": "str",
-        "x": 650,
-        "y": 1100,
+        "x": 640,
+        "y": 1180,
         "wires": [
             [
                 "e654ce2fc26e34bb"
@@ -1740,8 +1674,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep3/config",
         "output": "str",
-        "x": 650,
-        "y": 1140,
+        "x": 640,
+        "y": 1220,
         "wires": [
             [
                 "8b28e6c2f1fbef01"
@@ -1760,7 +1694,7 @@
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_bal\",\n    \"name\": \"[[flow.configuration.name]] Energie balanced\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.bal.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
         "x": 330,
-        "y": 1180,
+        "y": 1260,
         "wires": [
             [
                 "b8e4f226e30e7908"
@@ -1782,7 +1716,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 970,
-        "y": 1180,
+        "y": 1260,
         "wires": []
     },
     {
@@ -1797,7 +1731,7 @@
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_bal/config",
         "output": "str",
         "x": 640,
-        "y": 1180,
+        "y": 1260,
         "wires": [
             [
                 "d021bd838e5777d3"
@@ -1808,15 +1742,15 @@
         "id": "081b5eca10ff90fa",
         "type": "file in",
         "z": "78c5a9187d6bfaf7",
-        "name": "read smartpi-consumecounter",
+        "name": "read smartpi-consumecounter file",
         "filename": "/var/smartpi/consumecounter",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 310,
-        "y": 1620,
+        "x": 390,
+        "y": 1580,
         "wires": [
             [
                 "8b99b920d849c36c"
@@ -1831,7 +1765,7 @@
         "files": "/var/smartpi/consumecounter",
         "recursive": "",
         "x": 180,
-        "y": 1560,
+        "y": 1520,
         "wires": [
             [
                 "081b5eca10ff90fa"
@@ -1849,8 +1783,8 @@
         "syntax": "mustache",
         "template": "{\"consumecounter\": \"{{payload}}\" }",
         "output": "json",
-        "x": 530,
-        "y": 1560,
+        "x": 540,
+        "y": 1520,
         "wires": [
             [
                 "5da00ff7d46ab718"
@@ -1861,15 +1795,15 @@
         "id": "7b17a09c6d0bc287",
         "type": "file in",
         "z": "78c5a9187d6bfaf7",
-        "name": "read smartpi-producecounter",
+        "name": "read smartpi-producecounter file",
         "filename": "/var/smartpi/producecounter",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 310,
-        "y": 1740,
+        "x": 370,
+        "y": 1700,
         "wires": [
             [
                 "bbd146bfd223fb04"
@@ -1883,8 +1817,8 @@
         "name": "watch producecounter file change",
         "files": "/var/smartpi/producecounter",
         "recursive": "",
-        "x": 180,
-        "y": 1680,
+        "x": 170,
+        "y": 1640,
         "wires": [
             [
                 "7b17a09c6d0bc287"
@@ -1902,8 +1836,8 @@
         "syntax": "mustache",
         "template": "{\"producecounter\": \"{{payload}}\" }",
         "output": "json",
-        "x": 530,
-        "y": 1680,
+        "x": 540,
+        "y": 1640,
         "wires": [
             [
                 "5da00ff7d46ab718"
@@ -1921,8 +1855,8 @@
         "syntax": "mustache",
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_consumecounter\",\n    \"name\": \"[[flow.configuration.name]] Consume counter\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"state_class\": \"total_increasing\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.consumecounter.value }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
-        "x": 360,
-        "y": 1220,
+        "x": 350,
+        "y": 1300,
         "wires": [
             [
                 "349ac3580e62006e"
@@ -1944,7 +1878,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 1010,
-        "y": 1220,
+        "y": 1300,
         "wires": []
     },
     {
@@ -1958,8 +1892,8 @@
         "syntax": "mustache",
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_consumecounter/config",
         "output": "str",
-        "x": 690,
-        "y": 1220,
+        "x": 680,
+        "y": 1300,
         "wires": [
             [
                 "374316d67211498a"
@@ -1978,7 +1912,7 @@
         "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_producecounter\",\n    \"name\": \"[[flow.configuration.name]] Produce counter\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"state_class\": \"total_increasing\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.producecounter.value }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
         "output": "json",
         "x": 350,
-        "y": 1260,
+        "y": 1340,
         "wires": [
             [
                 "bc7bb7d5b4908eb0"
@@ -2000,7 +1934,7 @@
         "expiry": "",
         "broker": "fe6c11b1f6951884",
         "x": 1010,
-        "y": 1260,
+        "y": 1340,
         "wires": []
     },
     {
@@ -2015,10 +1949,122 @@
         "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_producecounter/config",
         "output": "str",
         "x": 680,
-        "y": 1260,
+        "y": 1340,
         "wires": [
             [
                 "e5d3ae4426d71aa5"
+            ]
+        ]
+    },
+    {
+        "id": "bbd0f1abadf71396",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ec config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "a562bafe8f934256",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec\",\n    \"name\": \"[[flow.configuration.name]] Yield total reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 940,
+        "wires": [
+            [
+                "0dc898e8b61a23b7"
+            ]
+        ]
+    },
+    {
+        "id": "0dc898e8b61a23b7",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec/config",
+        "output": "str",
+        "x": 640,
+        "y": 940,
+        "wires": [
+            [
+                "bbd0f1abadf71396"
+            ]
+        ]
+    },
+    {
+        "id": "d3574c5c145e7dab",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ep config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "fb0107b3afddf403",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep\",\n    \"name\": \"[[flow.configuration.name]] Yield total feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 1100,
+        "wires": [
+            [
+                "97e1f2d1cf98c859"
+            ]
+        ]
+    },
+    {
+        "id": "97e1f2d1cf98c859",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep/config",
+        "output": "str",
+        "x": 640,
+        "y": 1100,
+        "wires": [
+            [
+                "d3574c5c145e7dab"
             ]
         ]
     },

@@ -15,6 +15,7 @@ module.exports = function(RED) {
                 var values = data.split(';');
                 var output = {
                     "date": values[0].replace(/['"]+/g, ''),
+                    "i": parseFloat(values[1]) + parseFloat(values[2]) + parseFloat(values[3]),
                     "i1": parseFloat(values[1]),
                     "i2": parseFloat(values[2]),
                     "i3": parseFloat(values[3]),
@@ -22,6 +23,7 @@ module.exports = function(RED) {
                     "u1": parseFloat(values[5]),
                     "u2": parseFloat(values[6]),
                     "u3": parseFloat(values[7]),
+                    "p": parseFloat(values[8]) + parseFloat(values[9]) + parseFloat(values[10]),
                     "p1": parseFloat(values[8]),
                     "p2": parseFloat(values[9]),
                     "p3": parseFloat(values[10]),
@@ -31,9 +33,11 @@ module.exports = function(RED) {
                     "f1": parseFloat(values[14]),
                     "f2": parseFloat(values[15]),
                     "f3": parseFloat(values[16]),
+                    "ec": parseFloat(values[17]) + parseFloat(values[18]) + parseFloat(values[19]),
                     "ec1": parseFloat(values[17]),
                     "ec2": parseFloat(values[18]),
                     "ec3": parseFloat(values[19]),
+                    "ep": parseFloat(values[20]) + parseFloat(values[21]) + parseFloat(values[22]),
                     "ep1": parseFloat(values[20]),
                     "ep2": parseFloat(values[21]),
                     "ep3": parseFloat(values[22]),

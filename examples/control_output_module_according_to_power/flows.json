@@ -1,0 +1,94 @@
+[
+    {
+        "id": "9862b9870ad71fe1",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8dc56d3f50dc2c4f",
+        "type": "function",
+        "z": "9862b9870ad71fe1",
+        "name": "function 2",
+        "func": "var smartpidigitalout1, smartpidigitalout2, smartpidigitalout3, smartpidigitalout4;\nvar output = [false, false, false, false];\n\nsmartpidigitalout1 = context.get(\"smartpidigitalout1\"); //to retrieve a variable  \nsmartpidigitalout2 = context.get(\"smartpidigitalout2\"); //to retrieve a variable  \nsmartpidigitalout3 = context.get(\"smartpidigitalout3\"); //to retrieve a variable  \nsmartpidigitalout4 = context.get(\"smartpidigitalout4\"); //to retrieve a variable  \n\n\nif ((msg.payload <= -450) && ((smartpidigitalout1 == false) || (typeof smartpidigitalout1 == 'undefined'))) {\n    output = [true, false, false, false];\n    context.set(\"smartpidigitalout1\", true); // to store a variable\n} else if ((msg.payload <= -450) && (smartpidigitalout1 == true) && ((smartpidigitalout2 == false) || (typeof smartpidigitalout2 == 'undefined'))) {\n    output = [true, true, false, false];\n    context.set(\"smartpidigitalout1\", true); // to store a variable\n    context.set(\"smartpidigitalout2\", true); // to store a variable\n} else if ((msg.payload <= -450) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && ((smartpidigitalout3 == false) || (typeof smartpidigitalout3 == 'undefined'))) {\n    output = [true, true, true, false];\n    context.set(\"smartpidigitalout1\", true); // to store a variable\n    context.set(\"smartpidigitalout2\", true); // to store a variable\n    context.set(\"smartpidigitalout3\", true); // to store a variable\n} else if ((msg.payload <= -450) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && (smartpidigitalout3 == true) && ((smartpidigitalout4 == false) || (typeof smartpidigitalout4 == 'undefined'))) {\n    output = [true, true, true, true];\n    context.set(\"smartpidigitalout1\", true); // to store a variable\n    context.set(\"smartpidigitalout2\", true); // to store a variable\n    context.set(\"smartpidigitalout3\", true); // to store a variable\n    context.set(\"smartpidigitalout4\", true); // to store a variable\n} else if ((msg.payload > 50) && (smartpidigitalout1 == true) && ((smartpidigitalout2 == false) || (typeof smartpidigitalout2 == 'undefined'))) {\n    output = [false, false, false, false];\n    context.set(\"smartpidigitalout1\", false); // to store a variable\n    context.set(\"smartpidigitalout2\", false); // to store a variable\n    context.set(\"smartpidigitalout3\", false); // to store a variable\n    context.set(\"smartpidigitalout4\", false); // to store a variable\n} else if ((msg.payload > 50) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && ((smartpidigitalout3 == false) || (typeof smartpidigitalout3 == 'undefined'))) {\n    output = [true, false, false, false];\n    context.set(\"smartpidigitalout2\", false); // to store a variable\n    context.set(\"smartpidigitalout3\", false); // to store a variable\n    context.set(\"smartpidigitalout4\", false); // to store a variable\n} else if ((msg.payload > 50) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && (smartpidigitalout3 == true) && ((smartpidigitalout4 == false) || (typeof smartpidigitalout4 == 'undefined'))) {\n    output = [true, true, false, false];\n    context.set(\"smartpidigitalout3\", false); // to store a variable\n    context.set(\"smartpidigitalout4\", false); // to store a variable\n} else if ((msg.payload > 50) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && (smartpidigitalout3 == true) && (smartpidigitalout4 == true)) {\n    output = [true, true, true, false];\n    context.set(\"smartpidigitalout4\", false); // to store a variable\n} else if (msg.payload > 2000) {\n    output = [false, false, false, false];\n    context.set(\"smartpidigitalout1\", false); // to store a variable\n    context.set(\"smartpidigitalout2\", false); // to store a variable\n    context.set(\"smartpidigitalout3\", false); // to store a variable\n    context.set(\"smartpidigitalout4\", false);\n}\nnode.warn(output);\nmsg = {\n    payload: {\n        port: output\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 380,
+        "wires": [
+            [
+                "72dcd743eb0f7c77"
+            ]
+        ]
+    },
+    {
+        "id": "72dcd743eb0f7c77",
+        "type": "smartpi-e.digital-out",
+        "z": "9862b9870ad71fe1",
+        "name": "smartpi-e.digital-out",
+        "bits": [
+            false,
+            false,
+            false
+        ],
+        "indicator": "",
+        "server": "http://127.0.0.1:1080",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmVyc2VydmUiLCJyb2xlIjpbInNtYXJ0cGkiLCJhZG0iLCJkaWFsb3V0IiwiY2Ryb20iLCJzdWRvIiwiYXVkaW8iLCJ2aWRlbyIsInBsdWdkZXYiLCJnYW1lcyIsInVzZXJzIiwiaW5wdXQiLCJyZW5kZXIiLCJuZXRkZXYiLCJzcGkiLCJpMmMiLCJncGlvIiwic21hcnRwaWFkbWluIiwic21hcnRwaXVzZXJzIl0sInVzZXJuYW1lIjoic21hcnRwaSJ9.TbuMX0-WvIXTNYtjy5ijAIwssEVX-MIA5LyJBCiLZAo",
+        "output": 1,
+        "readonly": false,
+        "x": 950,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ccfd65088afcd130",
+        "type": "inject",
+        "z": "9862b9870ad71fe1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "b724c4d60a68fd07"
+            ]
+        ]
+    },
+    {
+        "id": "b724c4d60a68fd07",
+        "type": "smartpi-input",
+        "z": "9862b9870ad71fe1",
+        "name": "smartpi-input",
+        "indicator": "p",
+        "usetrigger": true,
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "8dc56d3f50dc2c4f"
+            ]
+        ]
+    }
+]

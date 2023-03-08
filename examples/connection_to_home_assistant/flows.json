@@ -1,0 +1,2054 @@
+[
+    {
+        "id": "78c5a9187d6bfaf7",
+        "type": "tab",
+        "label": "home assistance",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2055a523eb964e81",
+        "type": "smartpi-values",
+        "z": "78c5a9187d6bfaf7",
+        "name": "smartpi-values",
+        "indicator": "",
+        "x": 120,
+        "y": 1400,
+        "wires": [
+            [
+                "5da00ff7d46ab718"
+            ]
+        ]
+    },
+    {
+        "id": "7ed38bcc602b9df9",
+        "type": "rbe",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1230,
+        "y": 1480,
+        "wires": [
+            [
+                "4860b4640106611c"
+            ]
+        ]
+    },
+    {
+        "id": "193485b0cb38463f",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor data",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 1240,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "9dd16a1be56cad41",
+        "type": "delay",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 1080,
+        "y": 1480,
+        "wires": [
+            [
+                "7ed38bcc602b9df9"
+            ]
+        ]
+    },
+    {
+        "id": "3f2ba51796c1e803",
+        "type": "inject",
+        "z": "78c5a9187d6bfaf7",
+        "name": "OnInit",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 220,
+        "wires": [
+            [
+                "226505a782b70f8d",
+                "fc5c54c7a8c5e406",
+                "c155e37383f2ca6b",
+                "58ab760e39f095d0",
+                "98fc8d1abdb27333",
+                "84f83d3611b5ab68",
+                "011e9e13f7aae396",
+                "6156d0d8a95d3d37",
+                "025bcaf12179a22b",
+                "515ce154fa50d45a",
+                "40a71c045f525c15",
+                "ed2c56562c8d5d0f",
+                "2e1a3c4798aa1309",
+                "77950ec32acd7499",
+                "7a9951a67f118dd5",
+                "3ba0ce8b11393285",
+                "9cb81c562e761766",
+                "594c9bf85f0b7dc5",
+                "06fe0e31f429e9de",
+                "b3c5d947c1af6874",
+                "281df9225dfaf54f",
+                "313c84539fa896c0",
+                "819d15c82dfe654b",
+                "7c1ffc158d687ec3",
+                "cdec0d6b2c87703a",
+                "7164e7ae382f893d",
+                "fd7c9cbf8c34cf14",
+                "081b5eca10ff90fa",
+                "7b17a09c6d0bc287"
+            ]
+        ]
+    },
+    {
+        "id": "37363bc6d2778139",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor i1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "fc5c54c7a8c5e406",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i1\",\n    \"name\": \"[[flow.configuration.name]] Current L1\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i1.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "e84798a64f5e8235"
+            ]
+        ]
+    },
+    {
+        "id": "bab6dc6994fcbd27",
+        "type": "comment",
+        "z": "78c5a9187d6bfaf7",
+        "name": "home assistant auto discovery device configuration",
+        "info": "",
+        "x": 230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "53b1127b9a619e5b",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor i2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "226505a782b70f8d",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i2\",\n    \"name\": \"[[flow.configuration.name]] Current L2\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i2.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "553956a74758575a"
+            ]
+        ]
+    },
+    {
+        "id": "854f55efb4ad057c",
+        "type": "change",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "configuration",
+                "pt": "flow",
+                "to": "{\"discovery_prefix\":\"homeassistant\",\"node_id\":\"smartpi\",\"object_id\":\"h021b01_heatpmp01cnt01\",\"manufacturer\":\"enerserve\",\"model\":\"smartpi2.0_h021b01_heatpmp01cnt01\",\"name\":\"SmartPi2.0 H021B01_HEATPMP01CNT01\",\"message_rate\":null}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "22b42bf78deed045",
+        "type": "inject",
+        "z": "78c5a9187d6bfaf7",
+        "name": "OnStartup",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "854f55efb4ad057c"
+            ]
+        ]
+    },
+    {
+        "id": "994e6a548daf5558",
+        "type": "comment",
+        "z": "78c5a9187d6bfaf7",
+        "name": "home assistant configuration",
+        "info": "",
+        "x": 160,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "11cd536f5e05c87a",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "mqtt topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.node_id}}/{{flow.configuration.object_id}}",
+        "output": "str",
+        "x": 1020,
+        "y": 1580,
+        "wires": [
+            [
+                "96c8da7170a7a730",
+                "8da116bec2f3f845",
+                "193485b0cb38463f"
+            ]
+        ]
+    },
+    {
+        "id": "4860b4640106611c",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "mqtt payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\n    \"date\":{\"raw\":\"{{payload.date}}\"},\n    {{#payload.consumecounter}}\n    \"consumecounter\":{\"raw\":\"{{payload.consumecounter}}\", \"value\":{{payload.consumecounter}}},\n    {{/payload.consumecounter}}\n    {{#payload.producecounter}}\n    \"producecounter\":{\"raw\":\"{{payload.producecounter}}\", \"value\":{{payload.producecounter}}},\n    {{/payload.producecounter}}\n    \"i1\":{\"raw\":\"{{payload.i1}}\", \"value\":{{payload.i1}}},\n    \"i2\":{\"raw\":\"{{payload.i2}}\", \"value\":{{payload.i2}}},\n    \"i3\":{\"raw\":\"{{payload.i3}}\", \"value\":{{payload.i3}}},\n    \"i4\":{\"raw\":\"{{payload.i4}}\", \"value\":{{payload.i4}}},\n    {{#payload.i}}\n    \"i\":{\"raw\":\"{{payload.i}}\", \"value\":{{payload.i}}},\n    {{/payload.i}}\n    \"u1\":{\"raw\":\"{{payload.u1}}\", \"value\":{{payload.u1}}},\n    \"u2\":{\"raw\":\"{{payload.u2}}\", \"value\":{{payload.u2}}},\n    \"u3\":{\"raw\":\"{{payload.u3}}\", \"value\":{{payload.u3}}},\n    \"p1\":{\"raw\":\"{{payload.p1}}\", \"value\":{{payload.p1}}},\n    \"p2\":{\"raw\":\"{{payload.p2}}\", \"value\":{{payload.p2}}},\n    \"p3\":{\"raw\":\"{{payload.p3}}\", \"value\":{{payload.p3}}},\n    {{#payload.p}}\n    \"p\":{\"raw\":\"{{payload.p}}\", \"value\":{{payload.p}}},\n    {{/payload.p}}\n    \"cos1\":{\"raw\":\"{{payload.cos1}}\", \"value\":{{payload.cos1}}},\n    \"cos2\":{\"raw\":\"{{payload.cos2}}\", \"value\":{{payload.cos2}}},\n    \"cos3\":{\"raw\":\"{{payload.cos3}}\", \"value\":{{payload.cos3}}},\n    \"f1\":{\"raw\":\"{{payload.f1}}\", \"value\":{{payload.f1}}},\n    \"f2\":{\"raw\":\"{{payload.f2}}\", \"value\":{{payload.f2}}},\n    \"f3\":{\"raw\":\"{{payload.f3}}\", \"value\":{{payload.f3}}},\n    \"ec1\":{\"raw\":\"{{payload.ec1}}\", \"value\":{{payload.ec1}}},\n    \"ec2\":{\"raw\":\"{{payload.ec2}}\", \"value\":{{payload.ec2}}},\n    \"ec3\":{\"raw\":\"{{payload.ec3}}\", \"value\":{{payload.ec3}}},\n    \"ep1\":{\"raw\":\"{{payload.ep1}}\", \"value\":{{payload.ep1}}},\n    \"ep2\":{\"raw\":\"{{payload.ep2}}\", \"value\":{{payload.ep2}}},\n    \"ep3\":{\"raw\":\"{{payload.ep3}}\", \"value\":{{payload.ep3}}},\n    \"bal\":{\"raw\":\"{{payload.bal}}\", \"value\":{{payload.bal}}}\n}",
+        "output": "json",
+        "x": 850,
+        "y": 1580,
+        "wires": [
+            [
+                "11cd536f5e05c87a"
+            ]
+        ]
+    },
+    {
+        "id": "07bc24536966dcae",
+        "type": "comment",
+        "z": "78c5a9187d6bfaf7",
+        "name": "home assistant publish of all smartpi values",
+        "info": "",
+        "x": 210,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "8da116bec2f3f845",
+        "type": "debug",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "96c8da7170a7a730",
+        "type": "debug",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "bf0d7928b2e43095",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "override message_rate?",
+        "field": "rate",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.message_rate}}",
+        "output": "str",
+        "x": 870,
+        "y": 1480,
+        "wires": [
+            [
+                "9dd16a1be56cad41"
+            ]
+        ]
+    },
+    {
+        "id": "9946938d0f47739a",
+        "type": "smartpi-input",
+        "z": "78c5a9187d6bfaf7",
+        "name": "smartpi-in-power-total",
+        "indicator": "p",
+        "x": 150,
+        "y": 1460,
+        "wires": [
+            [
+                "3ff5d9fa1a0fb9bc"
+            ]
+        ]
+    },
+    {
+        "id": "3453cabca854dc85",
+        "type": "smartpi-input",
+        "z": "78c5a9187d6bfaf7",
+        "name": "smartpi-in-current-total",
+        "indicator": "i",
+        "x": 150,
+        "y": 1500,
+        "wires": [
+            [
+                "a93684f19fbcd5d1"
+            ]
+        ]
+    },
+    {
+        "id": "5da00ff7d46ab718",
+        "type": "join",
+        "z": "78c5a9187d6bfaf7",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 810,
+        "y": 1400,
+        "wires": [
+            [
+                "bf0d7928b2e43095"
+            ]
+        ]
+    },
+    {
+        "id": "3ff5d9fa1a0fb9bc",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "jsonify p",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"p\": \"{{payload}}\" }",
+        "output": "json",
+        "x": 340,
+        "y": 1460,
+        "wires": [
+            [
+                "5da00ff7d46ab718"
+            ]
+        ]
+    },
+    {
+        "id": "a93684f19fbcd5d1",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "jsonify i",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"i\": \"{{payload}}\" }",
+        "output": "json",
+        "x": 340,
+        "y": 1500,
+        "wires": [
+            [
+                "5da00ff7d46ab718"
+            ]
+        ]
+    },
+    {
+        "id": "c155e37383f2ca6b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i3\",\n    \"name\": \"[[flow.configuration.name]] Current L3\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i3.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "4ecc336ae8684115"
+            ]
+        ]
+    },
+    {
+        "id": "2098aaf2b9812296",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor i3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "4cc051fd9d1819d8",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor u1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "58ab760e39f095d0",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_u1\",\n    \"name\": \"[[flow.configuration.name]] Voltage L1-N\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"voltage\",\n    \"value_template\": \"{{ value_json.u1.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"V\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 420,
+        "wires": [
+            [
+                "bf151073cf3e2cee"
+            ]
+        ]
+    },
+    {
+        "id": "4f29df73a5722a83",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor u2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "98fc8d1abdb27333",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_u2\",\n    \"name\": \"[[flow.configuration.name]] Voltage L2-N\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"voltage\",\n    \"value_template\": \"{{ value_json.u2.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"V\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "7cd48421934c282c"
+            ]
+        ]
+    },
+    {
+        "id": "84f83d3611b5ab68",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_u3\",\n    \"name\": \"[[flow.configuration.name]] Voltage L3-N\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"voltage\",\n    \"value_template\": \"{{ value_json.u3.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"V\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 500,
+        "wires": [
+            [
+                "6069d263e61354f8"
+            ]
+        ]
+    },
+    {
+        "id": "82ec5435f071979f",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor u3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "07639dbb16d4cf85",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor p1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "011e9e13f7aae396",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_p1\",\n    \"name\": \"[[flow.configuration.name]] Power L1\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"power\",\n    \"value_template\": \"{{ value_json.p1.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"W\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 540,
+        "wires": [
+            [
+                "70c6a36715da486d"
+            ]
+        ]
+    },
+    {
+        "id": "4c66cadc66415b09",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor p2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6156d0d8a95d3d37",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_p2\",\n    \"name\": \"[[flow.configuration.name]] Power L2\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"power\",\n    \"value_template\": \"{{ value_json.p2.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"W\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "3d9b9e8d3f9b1f6d"
+            ]
+        ]
+    },
+    {
+        "id": "025bcaf12179a22b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_p3\",\n    \"name\": \"[[flow.configuration.name]] Power L3\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"power\",\n    \"value_template\": \"{{ value_json.p3.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"W\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 620,
+        "wires": [
+            [
+                "0b71e1ebae90e33b"
+            ]
+        ]
+    },
+    {
+        "id": "3dea5ca75edec31b",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor p3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "566a722b0a412781",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor p config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "515ce154fa50d45a",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_p\",\n    \"name\": \"[[flow.configuration.name]] Power total\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"power\",\n    \"value_template\": \"{{ value_json.p.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"W\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 660,
+        "wires": [
+            [
+                "8d845d0a9cb83e05"
+            ]
+        ]
+    },
+    {
+        "id": "c8afa04d8921a6d7",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor cos1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 980,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "40a71c045f525c15",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_cos1\",\n    \"name\": \"[[flow.configuration.name]] COS PHI L1\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.cos1.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 700,
+        "wires": [
+            [
+                "b5b059f9c154645d"
+            ]
+        ]
+    },
+    {
+        "id": "d88fc043e2bb2924",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor cos2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 980,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "ed2c56562c8d5d0f",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_cos2\",\n    \"name\": \"[[flow.configuration.name]] COS PHI L2\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.cos2.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 740,
+        "wires": [
+            [
+                "a76a29083ad8b6b0"
+            ]
+        ]
+    },
+    {
+        "id": "2e1a3c4798aa1309",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_cos3\",\n    \"name\": \"[[flow.configuration.name]] COS PHI L3\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.cos3.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "ed90cfd13b0c62d1"
+            ]
+        ]
+    },
+    {
+        "id": "d3f426bdd1a74029",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor cos3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 980,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "77950ec32acd7499",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i4 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i4\",\n    \"name\": \"[[flow.configuration.name]] Current N\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i4.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 340,
+        "wires": [
+            [
+                "1e9b7357994dbc9f"
+            ]
+        ]
+    },
+    {
+        "id": "a79f84b5c55ce6bc",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor i4 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7a9951a67f118dd5",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_i\",\n    \"name\": \"[[flow.configuration.name]] Current total\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"current\",\n    \"value_template\": \"{{ value_json.i.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"A\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 380,
+        "wires": [
+            [
+                "5311a1c26b11c684"
+            ]
+        ]
+    },
+    {
+        "id": "71989cbfc63b67dd",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor i config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 960,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e38dda5a549563b2",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor f1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "3ba0ce8b11393285",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_f1\",\n    \"name\": \"[[flow.configuration.name]] Frequency L1\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"frequency\",\n    \"value_template\": \"{{ value_json.f1.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"Hz\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 820,
+        "wires": [
+            [
+                "83191029bee9e4a9"
+            ]
+        ]
+    },
+    {
+        "id": "25a11ac3dea6796c",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor f2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "9cb81c562e761766",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_f2\",\n    \"name\": \"[[flow.configuration.name]] Frequency L2\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"frequency\",\n    \"value_template\": \"{{ value_json.f2.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"Hz\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 860,
+        "wires": [
+            [
+                "bef3ff4f6c65143c"
+            ]
+        ]
+    },
+    {
+        "id": "594c9bf85f0b7dc5",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_f3\",\n    \"name\": \"[[flow.configuration.name]] Frequency L3\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"frequency\",\n    \"value_template\": \"{{ value_json.f3.value | float | round(2) }}\",\n    \"unit_of_measurement\": \"Hz\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 900,
+        "wires": [
+            [
+                "3d25a55a84c347f9"
+            ]
+        ]
+    },
+    {
+        "id": "56d728b2de075d96",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor f3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "e84798a64f5e8235",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i1/config",
+        "output": "str",
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "37363bc6d2778139"
+            ]
+        ]
+    },
+    {
+        "id": "553956a74758575a",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i2/config",
+        "output": "str",
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "53b1127b9a619e5b"
+            ]
+        ]
+    },
+    {
+        "id": "4ecc336ae8684115",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i3/config",
+        "output": "str",
+        "x": 640,
+        "y": 300,
+        "wires": [
+            [
+                "2098aaf2b9812296"
+            ]
+        ]
+    },
+    {
+        "id": "1e9b7357994dbc9f",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i4 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i4/config",
+        "output": "str",
+        "x": 640,
+        "y": 340,
+        "wires": [
+            [
+                "a79f84b5c55ce6bc"
+            ]
+        ]
+    },
+    {
+        "id": "5311a1c26b11c684",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor i config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_i/config",
+        "output": "str",
+        "x": 640,
+        "y": 380,
+        "wires": [
+            [
+                "71989cbfc63b67dd"
+            ]
+        ]
+    },
+    {
+        "id": "bf151073cf3e2cee",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_u1/config",
+        "output": "str",
+        "x": 640,
+        "y": 420,
+        "wires": [
+            [
+                "4cc051fd9d1819d8"
+            ]
+        ]
+    },
+    {
+        "id": "7cd48421934c282c",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_u2/config",
+        "output": "str",
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "4f29df73a5722a83"
+            ]
+        ]
+    },
+    {
+        "id": "6069d263e61354f8",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor u3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_u3/config",
+        "output": "str",
+        "x": 640,
+        "y": 500,
+        "wires": [
+            [
+                "82ec5435f071979f"
+            ]
+        ]
+    },
+    {
+        "id": "70c6a36715da486d",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_p1/config",
+        "output": "str",
+        "x": 640,
+        "y": 540,
+        "wires": [
+            [
+                "07639dbb16d4cf85"
+            ]
+        ]
+    },
+    {
+        "id": "3d9b9e8d3f9b1f6d",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_p2/config",
+        "output": "str",
+        "x": 640,
+        "y": 580,
+        "wires": [
+            [
+                "4c66cadc66415b09"
+            ]
+        ]
+    },
+    {
+        "id": "0b71e1ebae90e33b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_p3/config",
+        "output": "str",
+        "x": 640,
+        "y": 620,
+        "wires": [
+            [
+                "3dea5ca75edec31b"
+            ]
+        ]
+    },
+    {
+        "id": "8d845d0a9cb83e05",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor p config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_p/config",
+        "output": "str",
+        "x": 640,
+        "y": 660,
+        "wires": [
+            [
+                "566a722b0a412781"
+            ]
+        ]
+    },
+    {
+        "id": "b5b059f9c154645d",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_cos1/config",
+        "output": "str",
+        "x": 650,
+        "y": 700,
+        "wires": [
+            [
+                "c8afa04d8921a6d7"
+            ]
+        ]
+    },
+    {
+        "id": "a76a29083ad8b6b0",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_cos2/config",
+        "output": "str",
+        "x": 650,
+        "y": 740,
+        "wires": [
+            [
+                "d88fc043e2bb2924"
+            ]
+        ]
+    },
+    {
+        "id": "ed90cfd13b0c62d1",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor cos3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_cos3/config",
+        "output": "str",
+        "x": 650,
+        "y": 780,
+        "wires": [
+            [
+                "d3f426bdd1a74029"
+            ]
+        ]
+    },
+    {
+        "id": "83191029bee9e4a9",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_f1/config",
+        "output": "str",
+        "x": 640,
+        "y": 820,
+        "wires": [
+            [
+                "e38dda5a549563b2"
+            ]
+        ]
+    },
+    {
+        "id": "bef3ff4f6c65143c",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_f2/config",
+        "output": "str",
+        "x": 640,
+        "y": 860,
+        "wires": [
+            [
+                "25a11ac3dea6796c"
+            ]
+        ]
+    },
+    {
+        "id": "3d25a55a84c347f9",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor f3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_f3/config",
+        "output": "str",
+        "x": 640,
+        "y": 900,
+        "wires": [
+            [
+                "56d728b2de075d96"
+            ]
+        ]
+    },
+    {
+        "id": "7165ce4095541a6d",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ec1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "06fe0e31f429e9de",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec1\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 1 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec1.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 940,
+        "wires": [
+            [
+                "1b5d7b7b52aae20c"
+            ]
+        ]
+    },
+    {
+        "id": "f31cd64d674aaed1",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ec2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "b3c5d947c1af6874",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec2\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 2 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec2.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 980,
+        "wires": [
+            [
+                "57296f8fc4e26f93"
+            ]
+        ]
+    },
+    {
+        "id": "281df9225dfaf54f",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ec3\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 3 reference\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ec3.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 1020,
+        "wires": [
+            [
+                "9455296a2da75979"
+            ]
+        ]
+    },
+    {
+        "id": "3fa1d2d3aa28ed79",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ec3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "1b5d7b7b52aae20c",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec1/config",
+        "output": "str",
+        "x": 650,
+        "y": 940,
+        "wires": [
+            [
+                "7165ce4095541a6d"
+            ]
+        ]
+    },
+    {
+        "id": "57296f8fc4e26f93",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec2/config",
+        "output": "str",
+        "x": 650,
+        "y": 980,
+        "wires": [
+            [
+                "f31cd64d674aaed1"
+            ]
+        ]
+    },
+    {
+        "id": "9455296a2da75979",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ec3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ec3/config",
+        "output": "str",
+        "x": 650,
+        "y": 1020,
+        "wires": [
+            [
+                "3fa1d2d3aa28ed79"
+            ]
+        ]
+    },
+    {
+        "id": "e601bef767de475d",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ep1 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "313c84539fa896c0",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep1 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep1\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 1 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep1.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 1060,
+        "wires": [
+            [
+                "84728401c6ad478b"
+            ]
+        ]
+    },
+    {
+        "id": "e654ce2fc26e34bb",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ep2 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "819d15c82dfe654b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep2 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep2\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 2 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep2.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 1100,
+        "wires": [
+            [
+                "e4158bdf62b87e0b"
+            ]
+        ]
+    },
+    {
+        "id": "7c1ffc158d687ec3",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep3 config payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_ep3\",\n    \"name\": \"[[flow.configuration.name]] Yield phase 3 feed-in\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"value_template\": \"{{ value_json.ep3.value | float | round(2) }}\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 340,
+        "y": 1140,
+        "wires": [
+            [
+                "83a4be7e7dde8501"
+            ]
+        ]
+    },
+    {
+        "id": "8b28e6c2f1fbef01",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor ep3 config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "84728401c6ad478b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep1 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep1/config",
+        "output": "str",
+        "x": 650,
+        "y": 1060,
+        "wires": [
+            [
+                "e601bef767de475d"
+            ]
+        ]
+    },
+    {
+        "id": "e4158bdf62b87e0b",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep2 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep2/config",
+        "output": "str",
+        "x": 650,
+        "y": 1100,
+        "wires": [
+            [
+                "e654ce2fc26e34bb"
+            ]
+        ]
+    },
+    {
+        "id": "83a4be7e7dde8501",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor ep3 config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_ep3/config",
+        "output": "str",
+        "x": 650,
+        "y": 1140,
+        "wires": [
+            [
+                "8b28e6c2f1fbef01"
+            ]
+        ]
+    },
+    {
+        "id": "cdec0d6b2c87703a",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor balconfig payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_bal\",\n    \"name\": \"[[flow.configuration.name]] Energie balanced\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.bal.value | float | round(3) }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 330,
+        "y": 1180,
+        "wires": [
+            [
+                "b8e4f226e30e7908"
+            ]
+        ]
+    },
+    {
+        "id": "d021bd838e5777d3",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor bal config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 970,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "b8e4f226e30e7908",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor bal config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_bal/config",
+        "output": "str",
+        "x": 640,
+        "y": 1180,
+        "wires": [
+            [
+                "d021bd838e5777d3"
+            ]
+        ]
+    },
+    {
+        "id": "081b5eca10ff90fa",
+        "type": "file in",
+        "z": "78c5a9187d6bfaf7",
+        "name": "read smartpi-consumecounter",
+        "filename": "/var/smartpi/consumecounter",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 310,
+        "y": 1620,
+        "wires": [
+            [
+                "8b99b920d849c36c"
+            ]
+        ]
+    },
+    {
+        "id": "37913a686d727871",
+        "type": "watch",
+        "z": "78c5a9187d6bfaf7",
+        "name": "watch consumecounter file change",
+        "files": "/var/smartpi/consumecounter",
+        "recursive": "",
+        "x": 180,
+        "y": 1560,
+        "wires": [
+            [
+                "081b5eca10ff90fa"
+            ]
+        ]
+    },
+    {
+        "id": "8b99b920d849c36c",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "jsonify consumecounter",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"consumecounter\": \"{{payload}}\" }",
+        "output": "json",
+        "x": 530,
+        "y": 1560,
+        "wires": [
+            [
+                "5da00ff7d46ab718"
+            ]
+        ]
+    },
+    {
+        "id": "7b17a09c6d0bc287",
+        "type": "file in",
+        "z": "78c5a9187d6bfaf7",
+        "name": "read smartpi-producecounter",
+        "filename": "/var/smartpi/producecounter",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 310,
+        "y": 1740,
+        "wires": [
+            [
+                "bbd146bfd223fb04"
+            ]
+        ]
+    },
+    {
+        "id": "268433b73bb71d9b",
+        "type": "watch",
+        "z": "78c5a9187d6bfaf7",
+        "name": "watch producecounter file change",
+        "files": "/var/smartpi/producecounter",
+        "recursive": "",
+        "x": 180,
+        "y": 1680,
+        "wires": [
+            [
+                "7b17a09c6d0bc287"
+            ]
+        ]
+    },
+    {
+        "id": "bbd146bfd223fb04",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "jsonify producecounter",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"producecounter\": \"{{payload}}\" }",
+        "output": "json",
+        "x": 530,
+        "y": 1680,
+        "wires": [
+            [
+                "5da00ff7d46ab718"
+            ]
+        ]
+    },
+    {
+        "id": "7164e7ae382f893d",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor consumecounter payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_consumecounter\",\n    \"name\": \"[[flow.configuration.name]] Consume counter\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"state_class\": \"total_increasing\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.consumecounter.value }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 360,
+        "y": 1220,
+        "wires": [
+            [
+                "349ac3580e62006e"
+            ]
+        ]
+    },
+    {
+        "id": "374316d67211498a",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor consumecounter config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 1010,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "349ac3580e62006e",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor consumecounter config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_consumecounter/config",
+        "output": "str",
+        "x": 690,
+        "y": 1220,
+        "wires": [
+            [
+                "374316d67211498a"
+            ]
+        ]
+    },
+    {
+        "id": "fd7c9cbf8c34cf14",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor producecounter payload",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{=[[ ]]=}}\n{\n    \"unique_id\": \"[[flow.configuration.node_id]]_[[flow.configuration.object_id]]_producecounter\",\n    \"name\": \"[[flow.configuration.name]] Produce counter\",\n    \"state_topic\": \"[[flow.configuration.node_id]]/[[flow.configuration.object_id]]\",\n    \"state_class\": \"total_increasing\",\n    \"device_class\": \"energy\",\n    \"value_template\": \"{{ value_json.producecounter.value }}\",\n    \"unit_of_measurement\": \"Wh\",\n    \"device\": {\n        \"identifiers\": [\n            \"[[flow.configuration.object_id]]\"\n        ],\n        \"manufacturer\": \"[[flow.configuration.manufacturer]]\",\n        \"model\": \"[[flow.configuration.model]]\",\n        \"name\": \"[[flow.configuration.name]]\"\n    }\n}",
+        "output": "json",
+        "x": 350,
+        "y": 1260,
+        "wires": [
+            [
+                "bc7bb7d5b4908eb0"
+            ]
+        ]
+    },
+    {
+        "id": "e5d3ae4426d71aa5",
+        "type": "mqtt out",
+        "z": "78c5a9187d6bfaf7",
+        "name": "publish sensor producecounter config",
+        "topic": "",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe6c11b1f6951884",
+        "x": 1010,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "bc7bb7d5b4908eb0",
+        "type": "template",
+        "z": "78c5a9187d6bfaf7",
+        "name": "sensor producecounter config topic",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{flow.configuration.discovery_prefix}}/sensor/{{flow.configuration.node_id}}/{{flow.configuration.object_id}}_producecounter/config",
+        "output": "str",
+        "x": 680,
+        "y": 1260,
+        "wires": [
+            [
+                "e5d3ae4426d71aa5"
+            ]
+        ]
+    },
+    {
+        "id": "fe6c11b1f6951884",
+        "type": "mqtt-broker",
+        "name": "MQTT Broker",
+        "broker": "mqtt.home.com",
+        "port": "1883",
+        "clientid": "smartpi-node-red",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "smartpi/status",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "up",
+        "birthMsg": {},
+        "closeTopic": "smartpi/status",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "down",
+        "closeMsg": {},
+        "willTopic": "smartpi/status",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": "down",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

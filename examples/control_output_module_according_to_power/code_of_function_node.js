@@ -43,6 +43,8 @@ if ((msg.payload <= -450) && ((smartpidigitalout1 == false) || (typeof smartpidi
 } else if ((msg.payload > 50) && (smartpidigitalout1 == true) && (smartpidigitalout2 == true) && (smartpidigitalout3 == true) && (smartpidigitalout4 == true)) {
     output = [true, true, true, false];
     context.set("smartpidigitalout4", false); // to store a variable
+} else {
+    output = [smartpidigitalout1, smartpidigitalout2, smartpidigitalout3, smartpidigitalout4];    
 }
 node.warn(output);
 msg = {

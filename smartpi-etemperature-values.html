@@ -9,6 +9,9 @@
       indicator: {
         value: '',
       },
+      temperaturefile: {
+        value: '/var/tmp/smartpi/smartpi_etemperature_values',
+      }
     },
     inputs: 0,
     outputs: 1,
@@ -27,6 +30,10 @@
       <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
       <input type="text" id="node-input-name" placeholder="Name">
   </div>
+  <div class="form-row">
+        <label for="node-input-temperaturefile"><i class="fa fa-globe"></i> Path of temperature-file:</label>
+        <input type="text" id="node-input-temperaturefile" placeholder="/var/tmp/smartpi/smartpi_etemperature_values">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="smartpi-e.temperature-values">

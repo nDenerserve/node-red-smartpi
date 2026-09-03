@@ -1,0 +1,230 @@
+<script type="text/javascript">
+  RED.nodes.registerType('smartpi-e.analog-in', {
+    category: 'SmartPi',
+    color: '#a6bbcf',
+    defaults: {
+      name: {
+        value: 'smartpi-e.analog-in',
+      },
+      indicator: {
+        value: '',
+      },
+      server: {
+        value: 'http://127.0.0.1:1080',
+      },
+      // Hex only, e.g. "0x68" - the MCP3424's real I2C bus address, same as
+      // the analog-out module's address field.
+      address: {
+        value: '0x68',
+        validate: RED.validators.regex(/^0[xX][0-9a-fA-F]+$/),
+      },
+      // One entry per physical channel/jumper - true = 4-20mA (current),
+      // false = 0-10V (voltage). Mirrors the digital-out module's bits
+      // array, but each entry here has its own independent meaning rather
+      // than together encoding one address.
+      channelTypes: {
+        value: [true, true, true, true],
+      },
+      // Seconds between independent status reads; 0 disables polling
+      // entirely (the node only reacts to input).
+      pollInterval: {
+        value: 0,
+        validate: RED.validators.number(),
+      },
+    },
+    // See smartpi-modules-digital-out.html for why the token lives here and
+    // not in defaults.
+    credentials: {
+      token: { type: 'password' },
+    },
+    oneditsave: Save,
+    oneditprepare: Restore,
+    inputs: 1,
+    outputs: 1,
+    icon: 'arrow-in.png',
+    label: function () {
+      return (
+        this.name + ' ' + this.indicator ||
+        'smartpi-e.analog-in ' + this.indicator
+      );
+    },
+  });
+
+  function Save() {
+    const NumChannels = 4;
+    this.channelTypes = [];
+    for (let i = 0; i < NumChannels; i++) {
+      this.channelTypes.push($(`#analoginCh${i}`).is(':checked'));
+    }
+  }
+
+  function Restore() {
+    for (let i = 0; i < this.channelTypes.length; i++) {
+      $(`#analoginCh${i}`).prop('checked', this.channelTypes[i]);
+    }
+  }
+</script>
+
+<script type="text/x-red" data-template-name="smartpi-e.analog-in">
+
+    <style>
+        .labelleft {
+            float: left;
+            width: 150px !important;
+        }
+
+        .customswitch {
+            position: relative;
+            display: inline-block;
+            width: 23px !important;
+            height: 40px;
+            vertical-align: middle;
+        }
+
+        .customswitch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateY(-17px);
+            -ms-transform: translateY(-17px);
+            transform: translateY(-17px);
+        }
+
+        .slider.round {
+            border-radius: 23px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .channelrow {
+            margin-bottom: 8px;
+        }
+
+        .channelunit {
+            display: inline-block;
+            width: 60px;
+            text-align: center;
+            font-size: 0.85em;
+            color: #666;
+        }
+    </style>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-microchip"></i> Address (hex)</label>
+        <input type="text" id="node-input-address" placeholder="0x68">
+    </div>
+    <div class="form-row">
+        <label class="labelleft"><i class="fa fa-sliders"></i> Channel jumpers</label>
+    </div>
+    <div class="form-row channelrow">
+        <label class="labelleft" style="width: 90px !important; padding-left: 20px;">Channel 1</label>
+        <span class="channelunit">0-10V</span>
+        <label class="customswitch">
+            <input type="checkbox" id="analoginCh0">
+            <span class="slider round"></span>
+        </label>
+        <span class="channelunit">4-20mA</span>
+    </div>
+    <div class="form-row channelrow">
+        <label class="labelleft" style="width: 90px !important; padding-left: 20px;">Channel 2</label>
+        <span class="channelunit">0-10V</span>
+        <label class="customswitch">
+            <input type="checkbox" id="analoginCh1">
+            <span class="slider round"></span>
+        </label>
+        <span class="channelunit">4-20mA</span>
+    </div>
+    <div class="form-row channelrow">
+        <label class="labelleft" style="width: 90px !important; padding-left: 20px;">Channel 3</label>
+        <span class="channelunit">0-10V</span>
+        <label class="customswitch">
+            <input type="checkbox" id="analoginCh2">
+            <span class="slider round"></span>
+        </label>
+        <span class="channelunit">4-20mA</span>
+    </div>
+    <div class="form-row channelrow">
+        <label class="labelleft" style="width: 90px !important; padding-left: 20px;">Channel 4</label>
+        <span class="channelunit">0-10V</span>
+        <label class="customswitch">
+            <input type="checkbox" id="analoginCh3">
+            <span class="slider round"></span>
+        </label>
+        <span class="channelunit">4-20mA</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-globe"></i> Server:port</label>
+        <input type="text" id="node-input-server" placeholder="http://127.0.0.1:1080">
+    </div>
+    <div class="form-row">
+        <label for="node-input-token"> <i class="fa fa-lock"></i> API-Token<span id="node-span-token" style="display:none"></span></label>
+        <input type="password" id="node-input-token">
+    </div>
+    <div class="form-row">
+        <label for="node-input-pollInterval"><i class="fa fa-refresh"></i> Poll interval (s)</label>
+        <input type="number" id="node-input-pollInterval" min="0" step="1" placeholder="0 = off" style="width: 100px;">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="smartpi-e.analog-in">
+  <p>Reads a 4-channel MCP3424-based analog input module (4-20mA and/or 0-10V per channel).</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">any</span></dt>
+    <dd>ignored - any input message just triggers a read of all four channels.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">array</span></dt>
+    <dd>the four resolved readings in channel order, each already in the unit its jumper is set to (mA or V).</dd>
+    <dt>channels <span class="property-type">array</span></dt>
+    <dd>the same four readings as objects: <code>{channel, type, unit, value}</code>.</dd>
+    <dt>moduleStatus <span class="property-type">object</span></dt>
+    <dd>the server's raw, unfiltered response - both a current and a voltage reading for every channel, regardless of jumper.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>The address is the module's I2C bus address in hex, e.g. <code>0x68</code>.</p>
+  <p>Each channel's jumper on the physical module selects 4-20mA or 0-10V; the server cannot read that jumper over I2C, so it always returns both readings for every channel. Set the matching toggle per channel here so <code>payload</code> and <code>channels</code> report the one that is actually wired - the other reading is still available on <code>moduleStatus</code> if needed.</p>
+  <p>Set "Poll interval" (seconds) to have the node independently re-read all four channels on that schedule, regardless of input. 0 disables polling.</p>
+</script>

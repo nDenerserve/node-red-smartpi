@@ -56,10 +56,27 @@ module.exports = function (RED) {
         // stored and encrypted separately by Node-RED. Credentials are not
         // part of `config` - RED.nodes.createNode(this, config) above is
         // what populates this.credentials, so it has to be read from there.
-        this.token = this.credentials.token;
+        // For a node that has never had a credential saved (a fresh node, or
+        // one carried over from before this field was a credential),
+        // this.credentials itself is undefined rather than an empty object.
+        // Without the guard below, `this.credentials.token` throws
+        // "Cannot read properties of undefined (reading 'token')" and the
+        // node never comes up at all, rather than just having no token -
+        // avoided using a plain conditional rather than ?. to keep working
+        // on the Node.js versions in engines (>=12.22.12) in package.json.
+        this.token = this.credentials ? this.credentials.token : undefined;
         this.bits = config.bits;
         this.output = config.output;
         this.readonly = config.readonly;
+
+        // Visible without triggering the node or reading any log: an empty
+        // token is silently sent as "Bearer " (see the Authorization header
+        // below) and only shows up as a rejection once something fires the
+        // node. This surfaces the same fact right on the flow canvas the
+        // moment the node deploys.
+        if (!this.token) {
+            node.status({ fill: "yellow", shape: "ring", text: "no token configured" });
+        }
 
         node.on('input', function (msg, nodeSend, nodeDone) {
 
@@ -190,5 +207,18 @@ module.exports = function (RED) {
 
         });
     }
-    RED.nodes.registerType("smartpi-e.digital-out", SmartPiDigitalOut);
+    // The credentials schema also has to be declared here, server-side, not
+    // just in the .html file's client-side registerType() call. The .html
+    // declaration only tells the editor which field is a password input;
+    // without this one the runtime has no registered credentials type for
+    // "smartpi-e.digital-out" to validate or store against at all, and
+    // rejects every save with "Credentials type ... is not registered" -
+    // silently as far as this node is concerned, since that error surfaces
+    // in Node-RED's own notifications, not through this node's status or
+    // debug output.
+    RED.nodes.registerType("smartpi-e.digital-out", SmartPiDigitalOut, {
+        credentials: {
+            token: { type: "password" }
+        }
+    });
 }

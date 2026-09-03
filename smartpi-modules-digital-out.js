@@ -207,5 +207,18 @@ module.exports = function (RED) {
 
         });
     }
-    RED.nodes.registerType("smartpi-e.digital-out", SmartPiDigitalOut);
+    // The credentials schema also has to be declared here, server-side, not
+    // just in the .html file's client-side registerType() call. The .html
+    // declaration only tells the editor which field is a password input;
+    // without this one the runtime has no registered credentials type for
+    // "smartpi-e.digital-out" to validate or store against at all, and
+    // rejects every save with "Credentials type ... is not registered" -
+    // silently as far as this node is concerned, since that error surfaces
+    // in Node-RED's own notifications, not through this node's status or
+    // debug output.
+    RED.nodes.registerType("smartpi-e.digital-out", SmartPiDigitalOut, {
+        credentials: {
+            token: { type: "password" }
+        }
+    });
 }

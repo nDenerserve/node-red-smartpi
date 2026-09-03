@@ -15,16 +15,25 @@
       server: {
         value: 'http://127.0.0.1:1080',
       },
-      token: {
-        value:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlbmVyc2VydmUiLCJyb2xlIjpbInNtYXJ0cGkiLCJhZG0iLCJkaWFsb3V0IiwiY2Ryb20iLCJzdWRvIiwiYXVkaW8iLCJ2aWRlbyIsInBsdWdkZXYiLCJnYW1lcyIsInVzZXJzIiwiaW5wdXQiLCJyZW5kZXIiLCJuZXRkZXYiLCJzcGkiLCJpMmMiLCJncGlvIiwic21hcnRwaWFkbWluIiwic21hcnRwaXVzZXJzIl0sInVzZXJuYW1lIjoic21hcnRwaSJ9.ilRjtk-_p1-meNlNutQDSDacW1AOpZFhB9DVfQ4V2lQ',
-      },
       output: {
         value: 1,
       },
       readonly: {
         value: false,
       },
+    },
+    // The token lives here, not in defaults: defaults are stored in
+    // flows.json in plain text and travel with every exported or shared
+    // flow - which is how an earlier version of this node shipped a live,
+    // signed, full-access token as its default value, publicly readable in
+    // this repository. A credential is stored separately by Node-RED
+    // (encrypted, keyed by a secret the admin UI never exposes) and never
+    // included in an export. type: 'password' also means the admin UI
+    // never sends the current value back to the browser after it's been
+    // set - reasonable here, since a lost token is regenerated in the
+    // SmartPi web UI rather than looked up again in Node-RED.
+    credentials: {
+      token: { type: 'password' },
     },
     oneditsave: Save,
     oneditprepare: Restore,

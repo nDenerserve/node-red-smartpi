@@ -1,5 +1,47 @@
 module.exports = function (RED) {
 
+    // needle resolves the promise on every HTTP response, successful or not
+    // - a 401 lands here in .then(), not in .catch(), which only ever sees
+    // transport failures (timeouts, DNS, connection refused). Without this
+    // check a revoked or mistyped token showed up as a normal-looking
+    // message carrying the server's {"message":"Invalid token."} body, with
+    // no red status ring and no node.error() - easy to miss in a flow.
+    function handleResponse(node, msg, nodeSend, nodeDone) {
+        return function (res) {
+            msg.statusCode = res.statusCode;
+            msg.headers = res.headers;
+            msg.responseUrl = res.url;
+            msg.payload = JSON.parse(res.body);
+
+            if (res.statusCode === 401) {
+                node.error("Token invalid or revoked - generate a new one in the SmartPi web UI (Settings > API tokens) and update this node.", msg);
+                node.status({ fill: "red", shape: "ring", text: "unauthorized" });
+                nodeDone();
+                return;
+            }
+
+            msg.retry = 0;
+            node.status({});
+            nodeSend(msg);
+            nodeDone();
+        };
+    }
+
+    function handleError(node, msg, nodeSend, nodeDone, url) {
+        return function (err) {
+            if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
+                node.error(RED._("common.notification.errors.no-response"), msg);
+                node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
+            } else {
+                node.error(err, msg);
+                node.status({ fill: "red", shape: "ring", text: err.code });
+            }
+            msg.payload = err.toString() + " : " + url;
+            msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
+            nodeDone();
+        };
+    }
+
     function SmartPiDigitalOut(config) {
 
         var needle = require('needle');
@@ -8,6 +50,10 @@ module.exports = function (RED) {
         var node = this;
         this.indicator = config.indicator;
         this.server = config.server;
+        // The token lives in credentials (see the .html file), not in
+        // config/defaults: defaults are stored in flows.json in plain text
+        // and travel with every exported or shared flow, credentials are
+        // stored and encrypted separately by Node-RED.
         this.token = config.token;
         this.bits = config.bits;
         this.output = config.output;
@@ -64,34 +110,8 @@ module.exports = function (RED) {
                 }
 
                 needle(opts.method, url, null, options)
-                    .then(function (res) {
-
-                        msg.statusCode = res.statusCode;
-                        msg.headers = res.headers;
-                        msg.responseUrl = res.url;
-                        msg.payload = JSON.parse(res.body);
-
-                        msg.retry = 0;
-
-                        node.status({});
-                        nodeSend(msg);
-                        nodeDone();
-
-                    })
-                    .catch(function (err) {
-
-                        if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
-                            node.error(RED._("common.notification.errors.no-response"), msg);
-                            node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
-                        } else {
-                            node.error(err, msg);
-                            node.status({ fill: "red", shape: "ring", text: err.code });
-                        }
-                        msg.payload = err.toString() + " : " + url;
-                        msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
-                        nodeDone();
-
-                    });
+                    .then(handleResponse(node, msg, nodeSend, nodeDone))
+                    .catch(handleError(node, msg, nodeSend, nodeDone, url));
 
 
             } else if (msg.payload.port) {
@@ -157,34 +177,8 @@ module.exports = function (RED) {
                 }
 
                 needle(opts.method, url, null, options)
-                    .then(function (res) {
-
-                        msg.statusCode = res.statusCode;
-                        msg.headers = res.headers;
-                        msg.responseUrl = res.url;
-                        msg.payload = JSON.parse(res.body);
-
-                        msg.retry = 0;
-
-                        node.status({});
-                        nodeSend(msg);
-                        nodeDone();
-
-                    })
-                    .catch(function (err) {
-
-                        if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
-                            node.error(RED._("common.notification.errors.no-response"), msg);
-                            node.status({ fill: "red", shape: "ring", text: "common.notification.errors.no-response" });
-                        } else {
-                            node.error(err, msg);
-                            node.status({ fill: "red", shape: "ring", text: err.code });
-                        }
-                        msg.payload = err.toString() + " : " + url;
-                        msg.statusCode = err.code || (err.response ? err.response.statusCode : undefined);
-                        nodeDone();
-
-                    });
+                    .then(handleResponse(node, msg, nodeSend, nodeDone))
+                    .catch(handleError(node, msg, nodeSend, nodeDone, url));
 
 
             } else {

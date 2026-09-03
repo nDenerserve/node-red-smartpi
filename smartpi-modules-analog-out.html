@@ -1,0 +1,83 @@
+<script type="text/javascript">
+  RED.nodes.registerType('smartpi-e.analog-out', {
+    category: 'SmartPi',
+    color: '#a6bbcf',
+    defaults: {
+      name: {
+        value: 'smartpi-e.analog-out',
+      },
+      indicator: {
+        value: '',
+      },
+      server: {
+        value: 'http://127.0.0.1:1080',
+      },
+      // Hex only, e.g. "0x60" - unlike the digital-out module, this address
+      // is not derived from jumper switches, it is the MCP4725's real I2C
+      // bus address. The regex validator gives immediate feedback in the
+      // editor (a red outline) instead of only failing once the node runs.
+      address: {
+        value: '0x60',
+        validate: RED.validators.regex(/^0[xX][0-9a-fA-F]+$/),
+      },
+      readonly: {
+        value: false,
+      },
+    },
+    // See smartpi-modules-digital-out.html for why the token lives here and
+    // not in defaults.
+    credentials: {
+      token: { type: 'password' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'arrow-in.png',
+    label: function () {
+      return (
+        this.name + ' ' + this.indicator ||
+        'smartpi-e.analog-out ' + this.indicator
+      );
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="smartpi-e.analog-out">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-microchip"></i> Address (hex)</label>
+        <input type="text" id="node-input-address" placeholder="0x60">
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-globe"></i> Server:port</label>
+        <input type="text" id="node-input-server" placeholder="http://127.0.0.1:1080">
+    </div>
+    <div class="form-row">
+        <label for="node-input-token"> <i class="fa fa-lock"></i> API-Token<span id="node-span-token" style="display:none"></span></label>
+        <input type="password" id="node-input-token">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-readonly" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-readonly" style="width: 70%;"> <i class="fa fa-book"></i> Readonly (input value will not be set)</label>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="smartpi-e.analog-out">
+  <p>Sets or reads the 4-20mA output of an MCP4725 analog output module.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>the current to set, in mA, between 4 and 20. Ignored when Readonly is checked - every input then just reads the current status instead of setting it.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>the current value reported back by the module, in mA.</dd>
+    <dt>moduleStatus <span class="property-type">object</span></dt>
+    <dd>the module's full status response (moduleaddress, setvalue, currentvalue).</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>The address is the module's I2C bus address in hex, e.g. <code>0x60</code> - not the jumper-switch encoding the digital-out module uses.</p>
+</script>

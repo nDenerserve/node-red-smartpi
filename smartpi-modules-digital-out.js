@@ -56,7 +56,15 @@ module.exports = function (RED) {
         // stored and encrypted separately by Node-RED. Credentials are not
         // part of `config` - RED.nodes.createNode(this, config) above is
         // what populates this.credentials, so it has to be read from there.
-        this.token = this.credentials.token;
+        // For a node that has never had a credential saved (a fresh node, or
+        // one carried over from before this field was a credential),
+        // this.credentials itself is undefined rather than an empty object.
+        // Without the guard below, `this.credentials.token` throws
+        // "Cannot read properties of undefined (reading 'token')" and the
+        // node never comes up at all, rather than just having no token -
+        // avoided using a plain conditional rather than ?. to keep working
+        // on the Node.js versions in engines (>=12.22.12) in package.json.
+        this.token = this.credentials ? this.credentials.token : undefined;
         this.bits = config.bits;
         this.output = config.output;
         this.readonly = config.readonly;

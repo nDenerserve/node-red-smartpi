@@ -69,6 +69,15 @@ module.exports = function (RED) {
         this.output = config.output;
         this.readonly = config.readonly;
 
+        // Visible without triggering the node or reading any log: an empty
+        // token is silently sent as "Bearer " (see the Authorization header
+        // below) and only shows up as a rejection once something fires the
+        // node. This surfaces the same fact right on the flow canvas the
+        // moment the node deploys.
+        if (!this.token) {
+            node.status({ fill: "yellow", shape: "ring", text: "no token configured" });
+        }
+
         node.on('input', function (msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == true) || (msg.payload == "0") || (msg.payload == false)) {

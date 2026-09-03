@@ -53,8 +53,10 @@ module.exports = function (RED) {
         // The token lives in credentials (see the .html file), not in
         // config/defaults: defaults are stored in flows.json in plain text
         // and travel with every exported or shared flow, credentials are
-        // stored and encrypted separately by Node-RED.
-        this.token = config.token;
+        // stored and encrypted separately by Node-RED. Credentials are not
+        // part of `config` - RED.nodes.createNode(this, config) above is
+        // what populates this.credentials, so it has to be read from there.
+        this.token = this.credentials.token;
         this.bits = config.bits;
         this.output = config.output;
         this.readonly = config.readonly;

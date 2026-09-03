@@ -21,7 +21,8 @@
             "Treshold-Trigger": "smartpi-treshold-trigger.js",
             "e.temperature-Values": "smartpi-etemperature-values.js",
             "e.digital OUT": "smartpi-modules-digital-out.js",
-            "e.analog OUT": "smartpi-modules-analog-out.js"
+            "e.analog OUT": "smartpi-modules-analog-out.js",
+            "e.analog IN": "smartpi-modules-analog-in.js"
         }
     },
     "repository": {

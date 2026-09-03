@@ -42,6 +42,17 @@ module.exports = function (RED) {
         };
     }
 
+    // Renders the jumper-switch bit pattern the same way both input branches
+    // and the periodic poll below need it, as the URL path segment
+    // identifying which module to address.
+    function bitsToAddress(bits) {
+        var address = "";
+        for (let element of bits) {
+            address += element ? "1" : "0";
+        }
+        return address;
+    }
+
     function SmartPiDigitalOut(config) {
 
         var needle = require('needle');
@@ -78,6 +89,39 @@ module.exports = function (RED) {
             node.status({ fill: "yellow", shape: "ring", text: "no token configured" });
         }
 
+        // Optional independent polling: reads the module's actual port
+        // status on a timer, regardless of whether or when an input last
+        // set anything. Off (no timer at all) unless a positive interval is
+        // configured - a 0/empty/invalid value must not silently poll every
+        // few milliseconds.
+        var pollInterval = Number(config.pollInterval);
+        var pollTimer = null;
+        function poll() {
+            var opts = {};
+            opts.headers = {};
+            opts.headers.Authorization = `Bearer ${node.token || ""}`;
+
+            var url = node.server + "/api/v1/module/digitalout/" + bitsToAddress(node.bits);
+            var options = {
+                json: true,
+                headers: { authorization: opts.headers.Authorization }
+            };
+
+            needle("get", url, null, options)
+                .then(handleResponse(node, {}, function (msg) { node.send(msg); }, function () {}))
+                .catch(handleError(node, {}, function (msg) { node.send(msg); }, function () {}, url));
+        }
+        if (pollInterval > 0) {
+            pollTimer = setInterval(poll, pollInterval * 1000);
+        }
+        node.on('close', function (done) {
+            if (pollTimer) {
+                clearInterval(pollTimer);
+                pollTimer = null;
+            }
+            done();
+        });
+
         node.on('input', function (msg, nodeSend, nodeDone) {
 
             if ((msg.payload == "1") || (msg.payload == true) || (msg.payload == "0") || (msg.payload == false)) {
@@ -102,15 +146,7 @@ module.exports = function (RED) {
                 opts.headers.Authorization = `Bearer ${this.token || ""}`
 
 
-                var url = this.server + "/api/v1/module/digitalout/";
-
-                for (let element of this.bits) {
-                    if (element == false) {
-                        url = url + "0"
-                    } else if (element == true) {
-                        url = url + "1"
-                    }
-                }
+                var url = this.server + "/api/v1/module/digitalout/" + bitsToAddress(this.bits);
 
                 if (this.readonly == false) {
                     url = url + "/" + this.output + "=";
@@ -154,15 +190,7 @@ module.exports = function (RED) {
                 opts.headers.Authorization = `Bearer ${this.token || ""}`
 
 
-                var url = this.server + "/api/v1/module/digitalout/";
-
-                for (let element of this.bits) {
-                    if (element == false) {
-                        url = url + "0"
-                    } else if (element == true) {
-                        url = url + "1"
-                    }
-                }
+                var url = this.server + "/api/v1/module/digitalout/" + bitsToAddress(this.bits);
 
                 if ((msg.payload.port.length == 4) && (this.readonly == false)) {
 

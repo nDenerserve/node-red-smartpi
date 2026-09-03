@@ -23,6 +23,13 @@
       readonly: {
         value: false,
       },
+      // Seconds between independent status reads; 0 disables polling
+      // entirely (the node only reacts to input, same as before this
+      // existed).
+      pollInterval: {
+        value: 0,
+        validate: RED.validators.number(),
+      },
     },
     // See smartpi-modules-digital-out.html for why the token lives here and
     // not in defaults.
@@ -62,6 +69,10 @@
         <input type="checkbox" id="node-input-readonly" style="display: inline-block; width: auto; vertical-align: top;">
         <label for="node-input-readonly" style="width: 70%;"> <i class="fa fa-book"></i> Readonly (input value will not be set)</label>
     </div>
+    <div class="form-row">
+        <label for="node-input-pollInterval"><i class="fa fa-refresh"></i> Poll interval (s)</label>
+        <input type="number" id="node-input-pollInterval" min="0" step="1" placeholder="0 = off" style="width: 100px;">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="smartpi-e.analog-out">
@@ -80,4 +91,5 @@
   </dl>
   <h3>Details</h3>
   <p>The address is the module's I2C bus address in hex, e.g. <code>0x60</code> - not the jumper-switch encoding the digital-out module uses.</p>
+  <p>The MCP4725 has no DAC readback, so a set value's response is only ever an echo of what was requested. Set "Poll interval" (seconds) to have the node independently re-read and output the module's actual status on that schedule, regardless of input. 0 disables polling.</p>
 </script>

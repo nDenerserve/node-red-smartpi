@@ -21,6 +21,13 @@
       readonly: {
         value: false,
       },
+      // Seconds between independent status reads; 0 disables polling
+      // entirely (the node only reacts to input, same as before this
+      // existed).
+      pollInterval: {
+        value: 0,
+        validate: RED.validators.number(),
+      },
     },
     // The token lives here, not in defaults: defaults are stored in
     // flows.json in plain text and travel with every exported or shared
@@ -173,6 +180,10 @@
     <div class="form-row">
         <input type="checkbox" id="node-input-readonly" style="display: inline-block; width: auto; vertical-align: top;">
         <label for="node-input-readonly" style="width: 70%;"> <i class="fa fa-book"></i> Readonly (Outputs will not set)</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-pollInterval"><i class="fa fa-refresh"></i> Poll interval (s)</label>
+        <input type="number" id="node-input-pollInterval" min="0" step="1" placeholder="0 = off" style="width: 100px;">
     </div>
 </script>
 

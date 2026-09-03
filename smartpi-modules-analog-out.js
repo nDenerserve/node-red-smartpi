@@ -83,6 +83,42 @@ module.exports = function (RED) {
             node.status({ fill: "yellow", shape: "ring", text: status.join(", ") });
         }
 
+        // Optional independent polling: the MCP4725 this module drives has
+        // no DAC readback (see the Go repository's SetAnalogOut420mA), so a
+        // PUT's response is only ever an echo of what was just requested,
+        // never a genuinely retrieved value. A periodic GET, independent of
+        // whatever was last set, is the only way this node can output a
+        // value that actually came from the server rather than from its own
+        // last input. Off (no timer at all) unless a positive interval is
+        // configured.
+        var pollInterval = Number(config.pollInterval);
+        var pollTimer = null;
+        function poll() {
+            var opts = {};
+            opts.headers = {};
+            opts.headers.Authorization = `Bearer ${node.token || ""}`;
+
+            var url = node.server + "/api/v1/module/analogout420ma/" + node.address;
+            var options = {
+                json: true,
+                headers: { authorization: opts.headers.Authorization }
+            };
+
+            needle("get", url, null, options)
+                .then(handleResponse(node, {}, function (msg) { node.send(msg); }, function () {}))
+                .catch(handleError(node, {}, function (msg) { node.send(msg); }, function () {}, url));
+        }
+        if (pollInterval > 0) {
+            pollTimer = setInterval(poll, pollInterval * 1000);
+        }
+        node.on('close', function (done) {
+            if (pollTimer) {
+                clearInterval(pollTimer);
+                pollTimer = null;
+            }
+            done();
+        });
+
         node.on('input', function (msg, nodeSend, nodeDone) {
 
             var opts = {};

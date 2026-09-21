@@ -2,6 +2,10 @@
   RED.nodes.registerType('smartpi-e.analog-out', {
     category: 'SmartPi',
     color: '#a6bbcf',
+    // Shown in the palette instead of the default "smartpi e.analog out"
+    // derived from the type name - distinguishes this MCP4725 4-20mA
+    // current-loop module from other analog-out modules added later.
+    paletteLabel: 'analog out 4-20mA',
     defaults: {
       name: {
         value: 'smartpi-e.analog-out',
@@ -35,7 +39,7 @@
     label: function () {
       return (
         this.name + ' ' + this.indicator ||
-        'smartpi-e.analog-out ' + this.indicator
+        'smartpi-e.analog-out 4-20mA ' + this.indicator
       );
     },
   });

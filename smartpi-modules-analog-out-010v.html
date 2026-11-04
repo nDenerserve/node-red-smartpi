@@ -1,0 +1,129 @@
+<script type="text/javascript">
+  RED.nodes.registerType('smartpi-e.analog-out-010v', {
+    category: 'SmartPi',
+    color: '#a6bbcf',
+    paletteLabel: 'analog out 0-10V',
+    defaults: {
+      name: {
+        value: 'smartpi-e.analog-out 0-10V',
+      },
+      indicator: {
+        value: '',
+      },
+      server: {
+        value: 'http://127.0.0.1:1080',
+      },
+      // Hex only, e.g. "0x60" - the MCP4728's real I2C bus address
+      // (factory default 0x60), same as the 4-20mA module's address field.
+      address: {
+        value: '0x60',
+        validate: RED.validators.regex(/^0[xX][0-9a-fA-F]+$/),
+      },
+      // "topic" (default): msg.topic = 1-4 picks the output per message.
+      // "1"-"4" fixed output as labelled on the board (1 = left), "all"
+      // to set/read all four at once.
+      channel: {
+        value: 'topic',
+      },
+      readonly: {
+        value: false,
+      },
+      // Also store the value in the DAC's EEPROM as power-up default.
+      persist: {
+        value: false,
+      },
+    },
+    // See smartpi-modules-digital-out.html for why the token lives here and
+    // not in defaults.
+    credentials: {
+      token: { type: 'password' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'arrow-in.png',
+    label: function () {
+      var ch = this.channel === 'all' ? 'all' : (this.channel === 'topic' || !this.channel ? 'out1-4' : 'out' + this.channel);
+      return (this.name || 'smartpi-e.analog-out 0-10V') + ' ' + ch + (this.indicator ? ' ' + this.indicator : '');
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="smartpi-e.analog-out-010v">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-microchip"></i> Address (hex)</label>
+        <input type="text" id="node-input-address" placeholder="0x60">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channel"><i class="fa fa-sliders"></i> Output</label>
+        <select id="node-input-channel">
+            <option value="topic">from msg.topic (1-4)</option>
+            <option value="1">1 (left)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4 (right)</option>
+            <option value="all">all</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-globe"></i> Server:port</label>
+        <input type="text" id="node-input-server" placeholder="http://127.0.0.1:1080">
+    </div>
+    <div class="form-row">
+        <label for="node-input-token"> <i class="fa fa-lock"></i> API-Token</label>
+        <input type="password" id="node-input-token">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-readonly" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-readonly" style="width: 70%;"> <i class="fa fa-book"></i> Readonly (input value will not be set)</label>
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-persist" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-persist" style="width: 70%;"> <i class="fa fa-floppy-o"></i> Store as power-up value (EEPROM)</label>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="smartpi-e.analog-out-010v">
+  <p>Sets or reads the four 0-10V outputs of an MCP4728 analog output module.</p>
+  <p>A Node-RED node has only one input, so one node serves all four outputs: with Output set to
+    <i>from msg.topic</i> (the default) every message says which output it is for. Wire four sources
+    into the same node, each with its own topic - only the addressed output is written, the others
+    keep their value.</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>topic <span class="property-type">number | string</span></dt>
+    <dd>the output to set, <code>1</code>-<code>4</code> (also <code>"out1"</code>-<code>"out4"</code>),
+      numbered as on the board from left to right. Used when Output is <i>from msg.topic</i>, ignored
+      otherwise. In Readonly mode a message without topic reports all four outputs.</dd>
+    <dt>payload <span class="property-type">number</span></dt>
+    <dd>the voltage to set, in V, between 0 and 10. With Output <i>all</i> it may also be an array in
+      output order (<code>[1.5, null, 10, 0]</code>, <code>null</code> leaves an output unchanged),
+      an object keyed by output (<code>{"2": 5}</code>) or a single number applied to all four.
+      Ignored when Readonly is checked - every input then just reads the status instead of setting it.</dd>
+    <dt class="optional">channel <span class="property-type">number | string</span></dt>
+    <dd>overrides both the configured output and msg.topic (1-4 or <code>"all"</code>).</dd>
+    <dt class="optional">persist <span class="property-type">boolean</span></dt>
+    <dd>overrides the "store as power-up value" setting for this message.</dd>
+  </dl>
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">number | array</span></dt>
+    <dd>the voltage reported back by the module for the addressed output, in V - or an array of all
+      four voltages for <i>all</i>. <code>msg.topic</code> is passed through unchanged.</dd>
+    <dt>moduleStatus <span class="property-type">object</span></dt>
+    <dd>the module's full status response: per output the voltage, raw DAC value, EEPROM
+      (power-up) voltage and DAC value, reference, gain, DAC channel and whether a calibration is applied.</dd>
+  </dl>
+  <h3>Details</h3>
+  <p>The address is the module's I2C bus address in hex, e.g. <code>0x60</code>. The 4-20mA output
+    module (MCP4725) uses the same default address - two modules on one bus need different addresses.</p>
+  <p>Outputs are numbered as on the board, 1 on the left to 4 on the right; arrays and
+    <code>msg.moduleStatus.channels</code> use the same order. The SmartPi maps this to the
+    DAC channels internally and applies the module's calibration, if one is stored on the SmartPi.</p>
+  <p>Without "store as power-up value" the outputs fall back to their EEPROM values (factory default 0 V)
+    after a power cycle. EEPROM writes take some milliseconds and wear the memory - don't enable it
+    for values that change continuously.</p>
+</script>

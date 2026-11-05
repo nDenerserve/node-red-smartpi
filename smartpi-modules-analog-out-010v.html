@@ -28,7 +28,8 @@
       readonly: {
         value: false,
       },
-      // Also store the value in the DAC's EEPROM as power-up default.
+      // Then store the state of all four outputs in the DAC's EEPROM as
+      // power-up default (the chip only stores all four at once).
       persist: {
         value: false,
       },
@@ -82,7 +83,7 @@
     </div>
     <div class="form-row">
         <input type="checkbox" id="node-input-persist" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-persist" style="width: 70%;"> <i class="fa fa-floppy-o"></i> Store as power-up value (EEPROM)</label>
+        <label for="node-input-persist" style="width: 70%;"> <i class="fa fa-floppy-o"></i> Store all outputs as power-up values (EEPROM)</label>
     </div>
 </script>
 
@@ -106,7 +107,7 @@
     <dt class="optional">channel <span class="property-type">number | string</span></dt>
     <dd>overrides both the configured output and msg.topic (1-4 or <code>"all"</code>).</dd>
     <dt class="optional">persist <span class="property-type">boolean</span></dt>
-    <dd>overrides the "store as power-up value" setting for this message.</dd>
+    <dd>overrides the "store all outputs as power-up values" setting for this message.</dd>
   </dl>
   <h3>Outputs</h3>
   <dl class="message-properties">
@@ -123,7 +124,9 @@
   <p>Outputs are numbered as on the board, 1 on the left to 4 on the right; arrays and
     <code>msg.moduleStatus.channels</code> use the same order. The SmartPi maps this to the
     DAC channels internally and applies the module's calibration, if one is stored on the SmartPi.</p>
-  <p>Without "store as power-up value" the outputs fall back to their EEPROM values (factory default 0 V)
-    after a power cycle. EEPROM writes take some milliseconds and wear the memory - don't enable it
-    for values that change continuously.</p>
+  <p>Without "store all outputs as power-up values" the outputs fall back to their EEPROM values
+    (factory default 0 V) after a power cycle. With it, after setting the value the SmartPi stores what
+    <b>all four</b> outputs drive at that moment as their power-up values - not only the addressed one,
+    the DAC can only store all four at once. EEPROM writes take some milliseconds and wear the memory -
+    don't enable it for values that change continuously.</p>
 </script>
